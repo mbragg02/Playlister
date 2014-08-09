@@ -1,0 +1,180 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?language javascript?>
+<?import java.lang.*?>
+<?import javafx.geometry.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.input.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.text.*?>
+
+<VBox fx:id="view" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="700.0" prefWidth="640.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.mbragg.playlister.controllers.viewControllers.ViewController">
+    <children>
+        <MenuBar>
+            <menus>
+                <Menu mnemonicParsing="false" style="-fx-font-weight: bold;" text="Playlist Generator">
+                    <items>
+                        <MenuItem mnemonicParsing="false" onAction="#exitApplication" style="-fx-font-weight: normal;" text="Quit Playlist generator">
+                            <accelerator>
+                                <KeyCodeCombination alt="UP" code="Q" control="UP" meta="DOWN" shift="UP" shortcut="UP" />
+                            </accelerator>
+                        </MenuItem>
+                    </items>
+                </Menu>
+                <Menu mnemonicParsing="false" text="File">
+                    <items>
+                        <MenuItem mnemonicParsing="false" onAction="#selectDirectory" text="Select directory" />
+                        <MenuItem mnemonicParsing="false" onAction="#selectQuery" text="Select query track" />
+                        <MenuItem mnemonicParsing="false" text="Export Playlist" />
+                    </items>
+                </Menu>
+                <Menu mnemonicParsing="false" text="Settings">
+                    <items>
+                        <CheckMenuItem fx:id="autoPlayerMenuCheckBox" mnemonicParsing="false" text="Automatic player launch" />
+                        <CheckMenuItem fx:id="restrictByGenreCheckBox" mnemonicParsing="false" text="Restrict by Genre" />
+                    </items>
+                </Menu>
+                <Menu mnemonicParsing="false" text="Help">
+                    <items>
+                        <MenuItem mnemonicParsing="false" onAction="#showHelp" text="Playlist Generator help" />
+                        <MenuItem mnemonicParsing="false" onAction="#showAboutInfo" text="About Playlist Generator" />
+                        <MenuItem mnemonicParsing="false" onAction="#deleteDatabase" style="-fx-text-fill: red;" text="Delete database" />
+                    </items>
+                </Menu>
+            </menus>
+            <VBox.margin>
+                <Insets bottom="10.0" />
+            </VBox.margin>
+        </MenuBar>
+        <HBox alignment="CENTER_LEFT" layoutY="-16.0" prefHeight="50.0" prefWidth="200.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+            <padding>
+                <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
+            </padding>
+            <children>
+                <TextField fx:id="directoryTextField" alignment="TOP_LEFT" focusTraversable="false" prefHeight="26.0" prefWidth="324.0" promptText="your/music/directory" />
+                <Button minWidth="120.0" mnemonicParsing="false" onAction="#selectDirectory" prefWidth="120.0" text="Select directory">
+                    <HBox.margin>
+                        <Insets left="10.0" right="10.0" />
+                    </HBox.margin>
+                    <tooltip>
+                        <Tooltip text="Select a directory containing .m4a audio files" />
+                    </tooltip>
+                </Button>
+                <Button fx:id="directoryScanButton" disable="true" mnemonicParsing="false" onAction="#scanDirectory" prefHeight="26.0" prefWidth="88.0" text="Scan ">
+                    <HBox.margin>
+                        <Insets right="10.0" />
+                    </HBox.margin>
+                    <tooltip>
+                        <Tooltip text="Scan and process your selected music library directory." />
+                    </tooltip>
+                </Button>
+                <Button fx:id="cancelButton" cancelButton="true" disable="true" mnemonicParsing="false" onAction="#cancelScan" text="Cancel">
+                    <tooltip>
+                        <Tooltip text="Cancel the current scan process" />
+                    </tooltip>
+                </Button>
+
+            </children>
+        </HBox>
+        <ProgressBar fx:id="progressBar" layoutX="239.0" layoutY="117.0" prefHeight="0.0" prefWidth="640.0" progress="0.0">
+            <HBox.margin>
+                <Insets right="5.0" />
+            </HBox.margin>
+            <padding>
+                <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
+            </padding>
+        </ProgressBar>
+        <Label fx:id="queryLabel" alignment="CENTER" contentDisplay="RIGHT" minWidth="600.0" prefHeight="59.0" prefWidth="620.0" text="Playlist Generator 0.3.2" textAlignment="CENTER">
+            <HBox.margin>
+                <Insets left="10.0" />
+            </HBox.margin>
+            <padding>
+                <Insets left="6.0" />
+            </padding>
+            <font>
+                <Font size="14.0" />
+            </font>
+            <VBox.margin>
+                <Insets left="10.0" />
+            </VBox.margin>
+        </Label>
+
+
+        <VBox prefHeight="42.0" prefWidth="640.0" VBox.vgrow="NEVER">
+            <children>
+                <ToolBar prefHeight="27.0" prefWidth="640.0">
+                    <items>
+                        <Button mnemonicParsing="false" onAction="#selectQuery" prefHeight="26.0" prefWidth="120.0" text="Select query" translateX="-25.0">
+                            <HBox.margin>
+                                <Insets left="30.0" />
+                            </HBox.margin>
+                            <tooltip>
+                                <Tooltip text="Select a .m4a file to base your playlist on" />
+                            </tooltip>
+                        </Button>
+                        <Slider fx:id="playlistNumberSlider" blockIncrement="5.0" majorTickUnit="5.0" max="30.0" min="5.0" minorTickCount="5" prefHeight="33.0" prefWidth="199.0" showTickLabels="true" value="3.0">
+                            <padding>
+                                <Insets left="20.0" />
+                            </padding>
+                        </Slider>
+                        <CheckBox fx:id="autoCheckbox" alignment="CENTER" contentDisplay="CENTER" mnemonicParsing="false" text="Automatic play">
+                            <HBox.margin>
+                                <Insets left="10.0" />
+                            </HBox.margin>
+                            <tooltip>
+                                <Tooltip text="Check this box to automatically launch the default media player on your system" />
+                            </tooltip>
+                        </CheckBox>
+                        <Button fx:id="createPlaylistButton" disable="true" minWidth="120.0" mnemonicParsing="false" onAction="#createPlaylist" prefHeight="26.0" prefWidth="120.0" text="Create Playlist" translateX="1.0">
+                            <HBox.margin>
+                                <Insets left="10.0" />
+                            </HBox.margin>
+                        </Button>
+                    </items>
+                    <VBox.margin>
+                        <Insets />
+                    </VBox.margin>
+                </ToolBar>
+            </children>
+            <VBox.margin>
+                <Insets top="10.0" />
+            </VBox.margin>
+        </VBox>
+
+
+        <VBox prefHeight="493.0" prefWidth="640.0">
+            <children>
+                <TableView fx:id="playlistTable" disable="true" focusTraversable="false" prefHeight="471.0" prefWidth="640.0" tableMenuButtonVisible="true">
+                    <columns>
+                        <TableColumn fx:id="titleColumn" editable="false" minWidth="150.0" prefWidth="150.0" text="Title" />
+                        <TableColumn fx:id="artistColumn" editable="false" minWidth="150.0" prefWidth="150.0" text="Artist" />
+                        <TableColumn fx:id="albumColumn" editable="false" minWidth="150.0" prefWidth="150.0" text="Album" />
+                        <TableColumn fx:id="genreColumn" editable="false" minWidth="80.0" text="Genre" />
+                    </columns>
+                </TableView>
+            </children>
+        </VBox>
+        <ToolBar fx:id="playlistToolbar" prefWidth="200.0">
+            <items>
+                <Button mnemonicParsing="false" onAction="#exportPlaylist" text="Export playlist">
+                    <HBox.margin>
+                        <Insets right="10.0" />
+                    </HBox.margin>
+                    <tooltip>
+                        <Tooltip text="Export your .m3u playlist file" />
+                    </tooltip>
+                </Button>
+                <Button alignment="CENTER" mnemonicParsing="false" onAction="#launchPlayer" text="Launch player" translateX="386.0">
+                    <HBox.margin>
+                        <Insets left="10.0" />
+                    </HBox.margin>
+                    <tooltip>
+                        <Tooltip text="Launch your playlist in the default media player on your system" />
+                    </tooltip>
+                </Button>
+            </items>
+        </ToolBar>
+
+
+    </children>
+</VBox>
