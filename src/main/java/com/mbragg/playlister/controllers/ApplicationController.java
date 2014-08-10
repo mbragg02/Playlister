@@ -36,4 +36,5 @@ public interface ApplicationController {
     void exportPlaylist(File file);
 
 //    void testPlaylistQuality() throws ExecutionException, InterruptedException;
+
 }

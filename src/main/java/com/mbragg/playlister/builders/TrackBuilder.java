@@ -107,7 +107,7 @@ public class TrackBuilder {
             }
 
         } catch (UnsupportedAudioFileException | IOException e) {
-            e.printStackTrace();
+            logger.log(Level.WARN, e.getMessage());
         }
 
         logger.log(Level.INFO, "Batch jobs complete");
@@ -135,6 +135,7 @@ public class TrackBuilder {
 //    }
 
 
+
     public Track buildTrack(File file, byte[] audioBytes, AudioFormat audioFormat) {
 
         Track track = setTrackMetaData(TrackFactory.getInstance().getTrack(), file);
@@ -149,11 +150,9 @@ public class TrackBuilder {
                 track.setModelProperty("co_row" + i, matrix.getRow(i));
             }
             track.setModelProperty("means", means);
-
             dao.saveTrack(track);
-
         } catch (Exception e) {
-            e.printStackTrace();
+            logger.log(Level.WARN, e.getMessage());
         }
 
         return track;
@@ -172,7 +171,7 @@ public class TrackBuilder {
             track.setYear(meta.get("YEAR"));
             track.setGenre(getGenreCategory(meta.get("GENRE")));
         } catch (ReadOnlyFileException | CannotReadException | InvalidAudioFrameException | IOException | TagException e) {
-            e.printStackTrace();
+            logger.log(Level.WARN, e.getMessage());
         }
         return track;
     }

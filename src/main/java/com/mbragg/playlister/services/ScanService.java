@@ -124,7 +124,6 @@ public class ScanService extends Service {
                     updateProgress(progress, numberOfFilesToProcess);
 
                     Future<Track> track = applicationController.buildTrack(file, entry.getKey().get(), entry.getValue());
-
                     while (!track.isDone()) {
                         Thread.sleep(10);
                     }

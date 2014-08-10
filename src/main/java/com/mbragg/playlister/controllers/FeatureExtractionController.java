@@ -1,10 +1,10 @@
 package com.mbragg.playlister.controllers;
 
-import com.mbragg.playlister.features.MultivariateNormalDistributionModel;
 import com.mbragg.playlister.controllers.audioControllers.AudioSampleController;
 import com.mbragg.playlister.controllers.audioControllers.AudioStreamController;
 import com.mbragg.playlister.factories.FeatureFactory;
 import com.mbragg.playlister.features.Feature;
+import com.mbragg.playlister.features.MultivariateNormalDistributionModel;
 import org.apache.commons.lang3.ArrayUtils;
 import org.apache.commons.math3.distribution.MultivariateNormalDistribution;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -40,6 +40,7 @@ public class FeatureExtractionController {
     }
 
     public MultivariateNormalDistribution extract(byte[] audioBytes, AudioFormat audioFormat) throws Exception {
+
         double[] samples = extractSamples(audioBytes, audioFormat);
 
         List<Feature> featuresToExtract = FeatureFactory.getInstance().getFeatureList();
@@ -57,6 +58,7 @@ public class FeatureExtractionController {
         return audioSampleController.getSamplesInMono(audioBytes, audioFormat);
     }
 
+
     protected double[][][] getFeatures(double[] samples, List<Feature> featuresToExtract) {
         int[] windowStartPositions = calculateWindowStartPositions(samples.length);
 
@@ -64,7 +66,32 @@ public class FeatureExtractionController {
 
         double[][][] results = new double[windowStartPositions.length][featuresToExtract.size()][];
 
+        System.out.println("loop started");
+
+//
+//        List<double[]> windows = new ArrayList<>();
+//
+//        IntStream.range(0, windowStartPositions.length).forEach(win -> windows.add(fillWindowWithSamples(samples, windowStartPositions, win)));
+//
+//        System.out.println("window samples calculated");
+//        IntStream.range(0, windows.size()).forEach(x -> {
+//
+//            List<double[]> values = featuresToExtract.stream()
+//                    .map(f -> f.extractFeature(windows.get(x), samplingRate))
+//                    .collect(Collectors.toList());
+//
+//            for (int i = 0; i < values.size(); i++) {
+//                // Loops over list of features extracted values. Add them to result array.
+//                results[x][i] = values.get(i);
+//            }
+//
+//        });
+
+
+
         for (int win = 0; win < windowStartPositions.length; win++) {
+
+//            double[] window = fillWindowWithSamples(samples, windowStartPositions, win);
 
             double[] window = new double[WINDOW_SIZE];
 
@@ -96,7 +123,34 @@ public class FeatureExtractionController {
             }
         }
 
+        System.out.println("loop ended");
+
         return results;
+    }
+
+    private double[] fillWindowWithSamples(double[] samples, int[] windowStartPositions, int win) {
+
+        double[] window = new double[WINDOW_SIZE];
+
+        // Set window sample positions
+        int startSample = windowStartPositions[win];
+        int endSample = startSample + WINDOW_SIZE - 1;
+
+        // Get the samples for the current window
+        if (endSample < samples.length) {
+            System.arraycopy(samples, startSample, window, 0, endSample + 1 - startSample);
+        } else {
+            // Case when end of window is larger than the number of samples. i.e reached then end of the file
+            // Pad the end of the window with zeros.
+            for (int sample = startSample; sample <= endSample; sample++) {
+                if (sample < samples.length)
+                    window[sample - startSample] = samples[sample];
+                else
+                    window[sample - startSample] = 0.0;
+            }
+        }
+
+        return window;
     }
 
     protected int[] calculateWindowStartPositions(int samplesLength) {
@@ -147,14 +201,6 @@ public class FeatureExtractionController {
 
         return aggregatedFeatureVectorList;
     }
-
-
-
-
-
-
-
-
 
 
 //    Unused at the moment! Possible delete later

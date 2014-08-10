@@ -10,8 +10,6 @@ import org.springframework.data.neo4j.config.EnableNeo4jRepositories;
 import org.springframework.data.neo4j.config.Neo4jConfiguration;
 import org.springframework.scheduling.annotation.EnableAsync;
 
-import java.io.ByteArrayOutputStream;
-
 /**
  * Master configuration class for Spring framework: Used by both the GUI and Commandline application.
  * Neo4j database service also initialized.
@@ -45,11 +43,6 @@ public class ApplicationConfiguration extends Neo4jConfiguration {
         return new GraphDatabaseFactory()
                 .newEmbeddedDatabaseBuilder(dbName)
                 .newGraphDatabase();
-    }
-
-    @Bean
-    ByteArrayOutputStream byteArrayOutputStream() {
-        return new ByteArrayOutputStream();
     }
 
 }

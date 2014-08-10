@@ -127,6 +127,7 @@ public class ViewController {
     }
 
     public void scanDirectory() {
+        scanService.reset();
 
         scanService.setListOfFiles(applicationController.directoryBatchBuild(directoryTextField.getText()));
         scanService.setOnSucceeded(workerStateEvent -> {
@@ -138,6 +139,7 @@ public class ViewController {
     }
 
     public void scanQueryTrack() {
+        scanService.reset();
 
         scanService.setListOfFiles(applicationController.queryFileBatchBuild(queryFile));
         scanService.setOnSucceeded(workerStateEvent -> {
@@ -150,8 +152,6 @@ public class ViewController {
     }
 
     private void startScan() {
-
-        scanService.reset();
 
         if (queryLabel.textProperty().isBound()) {
             queryLabel.textProperty().unbind();

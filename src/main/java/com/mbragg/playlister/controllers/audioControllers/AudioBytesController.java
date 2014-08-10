@@ -17,20 +17,15 @@ import java.util.concurrent.Future;
 @Component
 public class AudioBytesController {
 
-    private Logger logger;
-    private ByteArrayOutputStream byteArrayOutputStream;
-
     @Autowired
-    public AudioBytesController(Logger logger, ByteArrayOutputStream byteArrayOutputStream){
-        this.byteArrayOutputStream = byteArrayOutputStream;
-        this.logger = logger;
-    }
+    private Logger logger;
 
     @Async
     public Future<byte[]> getBytesFromAudioInputStream(AudioInputStream audioInputStream) throws IOException {
 
         logger.log(Level.INFO,  "Job #" + Thread.currentThread().getId() + " started... ");
 
+        ByteArrayOutputStream byteArrayOutputStream = new ByteArrayOutputStream();
         // Calculate the buffer size to use
         float bufferDuration = 0.25F;
         int bufferOverlap = 2;
