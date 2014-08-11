@@ -87,7 +87,8 @@ public class ViewController {
 
         if (OperatingSystemDetector.isMac()) {
             File defaultDirectory = new File(StringTools.defaultMacMusicDirectory());
-            chooser.setInitialDirectory(defaultDirectory);
+            if (defaultDirectory.exists())
+                chooser.setInitialDirectory(defaultDirectory);
         }
 
         File selectedDirectory = chooser.showDialog(stage);
@@ -111,7 +112,8 @@ public class ViewController {
 
         if (OperatingSystemDetector.isMac()) {
             File defaultDirectory = new File(StringTools.defaultMacMusicDirectory());
-            fileChooser.setInitialDirectory(defaultDirectory);
+            if (defaultDirectory.exists())
+                fileChooser.setInitialDirectory(defaultDirectory);
         }
 
         queryFile = fileChooser.showOpenDialog(stage);
