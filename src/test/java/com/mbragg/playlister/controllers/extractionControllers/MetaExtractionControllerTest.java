@@ -1,6 +1,5 @@
 package com.mbragg.playlister.controllers.extractionControllers;
 
-import com.mbragg.playlister.controllers.extractionControllers.MetaExtractionController;
 import org.junit.Before;
 import org.junit.Test;
 
@@ -36,7 +35,7 @@ public class MetaExtractionControllerTest {
     }
     @Test
     public void testParse() throws Exception {
-        Map<String, String> meta =  metaExtractionController.parse(file);
+        Map<String, String> meta =  metaExtractionController.extract(file);
 
         assertEquals("Test artist", meta.get("ARTIST"));
         assertEquals("2013", meta.get("YEAR"));
@@ -48,7 +47,7 @@ public class MetaExtractionControllerTest {
     @Test(expected = FileNotFoundException.class)
     public void testParseWithNotFoundExceptions() throws Exception{
         File unknownFile = new File("notfound.m4a");
-        metaExtractionController.parse(unknownFile);
+        metaExtractionController.extract(unknownFile);
     }
 
 }

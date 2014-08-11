@@ -13,11 +13,26 @@ public class StringTools {
     private static final int INVALID_EDIT_DISTANCE = -1;
     private static final String I_TUNES_MEDIA_MUSIC = "/Music/iTunes/iTunes Media/Music";
 
+    /**
+     * Levenshtein distance between two strings.
+     *
+     * @param a         String.
+     * @param b         String.
+     * @param threshold int.
+     * @return int. Levenshtein distance (edit distance) between the two strings.
+     */
     public static int levenshteinDistance(String a, String b, int threshold) {
         // wrapper for org.apache.commons.lang3 getLevenshteinDistance
         return StringUtils.getLevenshteinDistance(a, b, threshold);
     }
 
+    /**
+     * "Fuzzy equals". If two strings a the same, but a small degree of error.
+     *
+     * @param a String
+     * @param b String
+     * @return boolean
+     */
     public static boolean fuzzyEquals(String a, String b) {
         return levenshteinDistance(a, b, EDIT_DISTANCE_THRESHOLD) != INVALID_EDIT_DISTANCE;
     }

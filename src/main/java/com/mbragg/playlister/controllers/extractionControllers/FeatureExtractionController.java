@@ -72,7 +72,6 @@ public class FeatureExtractionController {
         return audioSampleController.getSamplesInMono(audioBytes, audioFormat);
     }
 
-
     /**
      * Main method to extract the audio features.
      *
@@ -200,9 +199,10 @@ public class FeatureExtractionController {
             featureVectorList.clear();
             featureValues.clear();
         }
-
         return aggregatedFeatureVectorList;
     }
+
+
 
 
 //    Code from previous prototypes. Not currently used!

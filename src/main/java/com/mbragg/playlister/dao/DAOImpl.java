@@ -19,13 +19,22 @@ import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
 
+/**
+ * Implementation of the DAO interface.
+ * <p>
+ * Class for communicating with the database.
+ *
+ * @author Michael Bragg
+ */
 @Component
 public class DAOImpl implements DAO {
 
     @Autowired
     MultivariateNormalDistributionModel model;
+
     @Value("${dbName}")
     private String dbName;
+
     private GraphDatabase graphDatabase;
     private TrackRepository trackRepository;
     private GenreRepository genreRepository;
@@ -37,16 +46,33 @@ public class DAOImpl implements DAO {
         this.trackRepository = trackRepository;
     }
 
+    /**
+     * Does a genre node exists in the database.
+     *
+     * @param genre String. The genre string to test.
+     * @return boolean. Yes or no.
+     */
     @Override
     public boolean genreExists(String genre) {
         return genreRepository.findByName(genre) != null;
     }
 
+    /**
+     * Does a track node exists in the database.
+     *
+     * @param filename String. The filename of a track node to test.
+     * @return boolean. Yes or no.
+     */
     @Override
     public boolean trackExists(String filename) {
         return trackRepository.findByFilename(filename) != null;
     }
 
+    /**
+     * Save a genre node into the database
+     *
+     * @param genre Genre. A genre node entity.
+     */
     @Override
     public void saveGenre(Genre genre) {
         try (Transaction saveGenresTransaction = graphDatabase.beginTx()) {
@@ -56,6 +82,11 @@ public class DAOImpl implements DAO {
         }
     }
 
+    /**
+     * Save a track node into the database.
+     *
+     * @param track Track. A Track node entity.
+     */
     @Override
     public void saveTrack(Track track) {
 
@@ -94,7 +125,9 @@ public class DAOImpl implements DAO {
 
     }
 
-
+    /*
+     * For a given track returned from the database, reconstruct a distribution model from its properties values.
+     */
     private MultivariateNormalDistribution createDistributionFromProperties(Track track) {
 
         double[] means = (double[]) track.getModelPropertyValue("means");
@@ -104,9 +137,16 @@ public class DAOImpl implements DAO {
             covarianceMatrix.setRow(i, (double[]) track.getModelPropertyValue("co_row" + i));
         }
         return new MultivariateNormalDistribution(means, covarianceMatrix.getData());
-
     }
 
+    /**
+     * Query the database with a filename.
+     *
+     * @param filename        String. The filename of a track to query.
+     * @param sizeOfResult    int.
+     * @param restrictByGenre boolean. Whether to limit the scope of the search to within the same genre as the query track.
+     * @return List<Track>. List of most similar tracks.
+     */
     @Override
     public List<Track> query(String filename, int sizeOfResult, boolean restrictByGenre) {
         List<Track> tracks = new ArrayList<>();
@@ -133,7 +173,9 @@ public class DAOImpl implements DAO {
         return tracks;
     }
 
-
+    /**
+     * Removes all the nodes from the database.
+     */
     @Override
     public void deleteDatabase() {
         trackRepository.deleteAll();

@@ -35,12 +35,17 @@ public class AboutViewController {
     @Value("${collegeInfo}")
     private String collegeInfo;
 
+    /**
+     * Method to setup and show the about popup dialog box.
+     * @param parentStage Stage. The parent stage of the application.
+     */
     public void show(Stage parentStage) {
 
         final Stage dialog = new Stage();
 
         int textWrapWidth = DIALOG_WIDTH - 2 * DIALOG_PADDING;
 
+        // Dialog box configuration
         dialog.initModality(Modality.APPLICATION_MODAL);
         dialog.initOwner(parentStage);
         dialog.setResizable(false);
@@ -48,12 +53,14 @@ public class AboutViewController {
         VBox dialogBox = new VBox(DIALOG_PADDING);
         dialogBox.setPadding(new Insets(DIALOG_PADDING));
 
+        // Text content set
         Text applicationNameText = new Text(applicationName);
-        Text authorText          = new Text("Author: " + author);
-        Text supervisorText      = new Text("Supervisor: " + supervisor);
-        Text projectNameText     = new Text("Project name: " + projectName);
-        Text collegeInfoText     = new Text(collegeInfo);
+        Text authorText = new Text("Author: " + author);
+        Text supervisorText = new Text("Supervisor: " + supervisor);
+        Text projectNameText = new Text("Project name: " + projectName);
+        Text collegeInfoText = new Text(collegeInfo);
 
+        // Text wrapping set
         applicationNameText.setWrappingWidth(textWrapWidth);
         applicationNameText.setStyle(BOLD_FONT);
         authorText.setWrappingWidth(textWrapWidth);
@@ -61,8 +68,10 @@ public class AboutViewController {
         projectNameText.setWrappingWidth(textWrapWidth);
         collegeInfoText.setWrappingWidth(textWrapWidth);
 
+        // Text added to dialog box
         dialogBox.getChildren().addAll(applicationNameText, authorText, supervisorText, projectNameText, collegeInfoText);
 
+        // Display the dialog box
         Scene dialogScene = new Scene(dialogBox, DIALOG_WIDTH, DIALOG_HEIGHT);
         dialog.setScene(dialogScene);
         dialog.show();

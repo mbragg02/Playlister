@@ -32,7 +32,6 @@ public class Genre {
         this.name = name;
     }
 
-
     @Override
     public String toString() {
         return "Genre{" +
@@ -48,7 +47,6 @@ public class Genre {
         Genre genre = (Genre) o;
 
         return !(name != null ? !name.equals(genre.name) : genre.name != null);
-
     }
 
     @Override

@@ -18,8 +18,17 @@ import org.springframework.beans.factory.annotation.Autowired;
 
 import java.io.File;
 
+/**
+ * View controller for JavaFX view.
+ *
+ * @author Michael Bragg
+ */
 public class ViewController {
 
+    public static final String FILTER_M4A = "*.m4a";
+    public static final String M4A_DESCRIPTION = "m4a files (*.m4a)";
+    public static final String FILTER_M3U = "*.m3u";
+    public static final String M3U_DESCRIPTION = "(*.m3u)";
     // Buttons
     public Button directoryScanButton;
     public Button createPlaylistButton;
@@ -42,7 +51,6 @@ public class ViewController {
     public CheckMenuItem autoPlayerMenuCheckBox;
     public CheckMenuItem restrictByGenreCheckBox;
 
-
     // Playlist tool bar
     public ToolBar playlistToolbar;
     public CheckBox autoCheckbox;
@@ -58,16 +66,20 @@ public class ViewController {
     private PlaylistService playlistService;
     @Autowired
     private AboutViewController aboutViewController;
+    @Autowired
+    private HelpViewController helpViewController;
 
     private Stage stage;
     private File queryFile;
-    @Autowired
-    private HelpViewController helpViewController;
 
     public Node getView() {
         return view;
     }
 
+    /**
+     * Initializes the view by setting global properties and bindings.
+     * @param stage Stage. The JavaFX view stage
+     */
     public void initializeViewController(Stage stage) {
         this.stage = stage;
 
@@ -82,6 +94,11 @@ public class ViewController {
         genreColumn.setCellValueFactory(new PropertyValueFactory<>("subGenre"));
     }
 
+    /**
+     * Called when the select directory button is pressed.
+     * - Opens a directory selector dialog box.
+     * - If on a mac, the default music directory folder is set.
+     */
     public void selectDirectory() {
         DirectoryChooser chooser = new DirectoryChooser();
 
@@ -97,17 +114,20 @@ public class ViewController {
             directoryTextField.setText(selectedDirectory.getAbsolutePath());
             directoryScanButton.setDisable(false);
         }
-
     }
 
+    /**
+     * Called when the select query button is pressed.
+     * - Opens a file chooser dialog box.
+     * - If on a mac, the default music directory folder is set.
+     */
     public void selectQuery() {
         playlistToolbar.setDisable(true);
         playlistTable.setDisable(true);
 
         FileChooser fileChooser = new FileChooser();
 
-        //Set extension filter
-        FileChooser.ExtensionFilter extFilter = new FileChooser.ExtensionFilter("m4a files (*.m4a)", "*.m4a");
+        FileChooser.ExtensionFilter extFilter = new FileChooser.ExtensionFilter(M4A_DESCRIPTION, FILTER_M4A);
         fileChooser.getExtensionFilters().add(extFilter);
 
         if (OperatingSystemDetector.isMac()) {
@@ -125,9 +145,13 @@ public class ViewController {
             queryLabel.setText(queryFile.getName());
             createPlaylistButton.setDisable(false);
         }
-
     }
 
+    /**
+     * Called when the scan button is pressed.
+     * - Sets which files are to be processed.
+     * - Calls the startScan method.
+     */
     public void scanDirectory() {
         scanService.reset();
 
@@ -140,6 +164,11 @@ public class ViewController {
         startScan();
     }
 
+    /**
+     * Called when a file is selected to form a playlist from that has not yet been scanned by the application.
+     * - The single query file is passed through the scan processes
+     * - Calls the startScan method.
+     */
     public void scanQueryTrack() {
         scanService.reset();
 
@@ -153,6 +182,10 @@ public class ViewController {
         startScan();
     }
 
+    /**
+     * Method that handles the life cycle of the scan service process.
+     * - Sets properties and bindings between the service and the GUI
+     */
     private void startScan() {
 
         if (queryLabel.textProperty().isBound()) {
@@ -177,13 +210,12 @@ public class ViewController {
         });
     }
 
+    /**
+     * Called when the create playlist button is pressed.
+     * - If the query file is known by the application, then the playlist service is initiated and bindings managed.
+     * - If unknown, passed to the scanQueryTrack method before returning to pass through the playlist generation process.
+     */
     public void createPlaylist() {
-
-//        try {
-//            applicationController.testPlaylistQuality();
-//        } catch (ExecutionException | InterruptedException e) {
-//            e.printStackTrace();
-//        }
 
         if (applicationController.trackExists(queryFile.getName())) {
 
@@ -212,16 +244,17 @@ public class ViewController {
         } else {
             scanQueryTrack();
         }
-
-
     }
 
-
+    /**
+     * Called when the export playlist button is pressed.
+     * - Shows a dialog box allowing the user to select a destination to save a playlist to.
+     */
     public void exportPlaylist() {
         FileChooser fileChooser = new FileChooser();
 
         //Set extension filter
-        FileChooser.ExtensionFilter extFilter = new FileChooser.ExtensionFilter("(*.m3u)", "*.m3u");
+        FileChooser.ExtensionFilter extFilter = new FileChooser.ExtensionFilter(M3U_DESCRIPTION, FILTER_M3U);
         fileChooser.getExtensionFilters().add(extFilter);
 
         //Show save file dialog
@@ -236,27 +269,46 @@ public class ViewController {
         }
     }
 
+    /**
+     * Called when the cancel scan button is pressed.
+     */
     public void cancelScan() {
         scanService.cancel();
     }
 
+    /**
+     * Called when the launch player button is pressed
+     */
     public void launchPlayer() {
         applicationController.launchPlaylist();
     }
 
+    /**
+     * Called when the "about" link is selected
+     */
     public void showAboutInfo() {
         aboutViewController.show(stage);
     }
 
+    /**
+     * Called when the "help" link is selected
+     */
+    public void showHelp() {
+        helpViewController.show(stage);
+    }
+
+    /**
+     * Called when the "Delete database" link is selected.
+     */
     public void deleteDatabase() {
         applicationController.deleteDB();
     }
 
+    /**
+     * Called when the application is instructed to exit.
+     */
     public void exitApplication() {
         stage.close();
     }
 
-    public void showHelp() {
-        helpViewController.show(stage);
-    }
 }

@@ -1,7 +1,9 @@
 package com.mbragg.playlister.features;
+
 /**
- * Created by Michael Bragg on 28/02/2014.
+ * Abstract feature class.
  *
+ * @author Michael Bragg
  */
 public abstract class Feature {
 

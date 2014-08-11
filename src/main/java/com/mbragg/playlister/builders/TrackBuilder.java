@@ -84,7 +84,7 @@ public class TrackBuilder {
     protected Track addMetaDataToTrack(File file, Track track) {
 
         try {
-            Map<String, String> meta = metaExtractionController.parse(file);
+            Map<String, String> meta = metaExtractionController.extract(file);
             track.setFilename(file.getName());
             track.setFilePath(file.getAbsolutePath());
             track.setTitle(meta.get("TITLE"));

@@ -16,22 +16,42 @@ import java.util.Map;
 import java.util.concurrent.ExecutionException;
 import java.util.concurrent.Future;
 
+/**
+ * Service to manage the scanning/processing of a users music directory.
+ *
+ * @author Michael Bragg
+ */
 @Component
 public class ScanService extends Service {
 
     public static final int INITIAL = 0;
-    public int numberOfConcurrentThreads = 5;
 
     @Autowired
     private ApplicationController applicationController;
 
     @Autowired
     private Logger logger;
+
     private List<File> listOfFiles;
+    public int numberOfConcurrentThreads = 5;
 
     public ScanService() {
+        // empty constructor
     }
 
+    public void setNumberOfConcurrentThreads(int numberOfConcurrentThreads) {
+        this.numberOfConcurrentThreads = numberOfConcurrentThreads;
+    }
+
+    public void setListOfFiles(List<File> listOfFiles) {
+        this.listOfFiles = listOfFiles;
+    }
+
+    /**
+     * Method that creates and runs the scan task.
+     *
+     * @return the new Task.
+     */
     @Override
     protected Task createTask() {
         return new Task() {
@@ -59,6 +79,10 @@ public class ScanService extends Service {
                 updateProgress(INITIAL, INITIAL);
             }
 
+            /**
+             * Method called when the Task is created
+             * @throws Exception if the batch extraction process encounters an error.
+             */
             @Override
             protected Object call() throws Exception {
 
@@ -81,7 +105,6 @@ public class ScanService extends Service {
                     filesToProcessBuffer = listOfFiles.subList(filesToProcessStartIndex, filesToProcessEndIndex);
 
                     updateMessage("Extracting audio... ");
-
                     Map<Future<byte[]>, AudioFormat> audioBytesWithAudioFormats;
 
                     try {
@@ -89,11 +112,8 @@ public class ScanService extends Service {
                         updateMessage("Extracting audio complete");
 
                         createTracksInBatch(audioBytesWithAudioFormats, filesToProcessBuffer);
-
                     } catch (InterruptedException e) {
-                        if (isCancelled()) {
-                            break;
-                        }
+                        if (isCancelled()) break;
                     }
 
                     if (filesToProcessEndIndex == listOfFiles.size()) {
@@ -107,7 +127,13 @@ public class ScanService extends Service {
                 return null;
             }
 
-
+            /**
+             * Method to create a batch of Tracks.
+             * @param audioBytesWithAudioFormats Map of Future<byte[]> audio data (Key) and AudioFormat data (Value)
+             * @param filesToProcessBuffer List<File> a list of files to process in this batch job
+             * @throws ExecutionException If the Future<byte> is not complete when it is queried.
+             * @throws InterruptedException If the batch job is cancelled at any time.
+             */
             public void createTracksInBatch(Map<Future<byte[]>, AudioFormat> audioBytesWithAudioFormats, List<File> filesToProcessBuffer)
                     throws ExecutionException, InterruptedException {
 
@@ -127,7 +153,6 @@ public class ScanService extends Service {
                     while (!track.isDone()) {
                         Thread.sleep(10);
                     }
-
                 }
 
 //                for (Future<Track> t : futureTasks) {
@@ -139,15 +164,4 @@ public class ScanService extends Service {
 
         };
     }
-
-
-    public void setNumberOfConcurrentThreads(int numberOfConcurrentThreads) {
-        this.numberOfConcurrentThreads = numberOfConcurrentThreads;
-    }
-
-
-    public void setListOfFiles(List<File> listOfFiles) {
-        this.listOfFiles = listOfFiles;
-    }
-
 }

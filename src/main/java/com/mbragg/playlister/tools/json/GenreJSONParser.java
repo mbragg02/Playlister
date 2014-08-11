@@ -16,7 +16,7 @@ import java.util.List;
 import java.util.Map;
 
 /**
- * Class to parse the specific genre JSON file, to extract the genre/sub genre relationships.
+ * Class to extract the specific genre JSON file, to extract the genre/sub genre relationships.
  *
  * @author Michael Bragg
  */
