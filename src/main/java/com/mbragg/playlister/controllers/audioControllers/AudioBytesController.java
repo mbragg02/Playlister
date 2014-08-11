@@ -25,7 +25,7 @@ public class AudioBytesController {
     private Logger logger;
 
     /**
-     * Exracts a byte[] from an audio input stream.
+     * Exacts a byte[] from an audio input stream.
      *
      * @param audioInputStream AudioInputStream. The audio input stream to extract the byte[] from.
      * @return The extracted byte[] data
