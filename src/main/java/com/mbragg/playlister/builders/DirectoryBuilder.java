@@ -2,6 +2,9 @@ package com.mbragg.playlister.builders;
 
 import org.apache.commons.io.filefilter.HiddenFileFilter;
 import org.apache.commons.io.filefilter.SuffixFileFilter;
+import org.apache.log4j.Level;
+import org.apache.log4j.Logger;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 import java.io.File;
@@ -12,15 +15,20 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 /**
- * FileBuilder class
+ * FileBuilder. Single Build method to scan a directory to return a list of files.
  *
  * @author Michael Bragg
  */
 @Component
 public class DirectoryBuilder {
 
+    @Autowired
+    Logger logger;
+
     /**
-     * Builds and returns a list of files.
+     * Traverses a supplied file directory to build/return a list of files.
+     * Files must have to same extension as the supplied String suffix.
+     * Hidden files are also ignored.
      *
      * @param musicDirectoryFilePath String. The directory to scan
      * @param suffix                 String. The file extension to filter by.
@@ -38,7 +46,7 @@ public class DirectoryBuilder {
                     .filter(HiddenFileFilter.VISIBLE::accept)
                     .collect(Collectors.toList());
         } catch (IOException e) {
-            e.printStackTrace();
+           logger.log(Level.WARN, "Exception scanning music directory:" + e.getMessage());
         }
         return files;
     }

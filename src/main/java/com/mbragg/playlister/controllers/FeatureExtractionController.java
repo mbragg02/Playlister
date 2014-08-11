@@ -19,6 +19,13 @@ import java.util.*;
 import java.util.stream.Collectors;
 import java.util.stream.DoubleStream;
 
+/**
+ * Feature Extraction controller.
+ * <p>
+ * Controls the feature extraction processes and model construction
+ *
+ * @author Michael Bragg
+ */
 @Component
 public class FeatureExtractionController {
 
@@ -35,10 +42,17 @@ public class FeatureExtractionController {
         this.audioStreamController = audioStreamController;
         this.audioSampleController = audioSampleController;
         this.multivariateNormalDistributionModel = multivariateNormalDistributionModel;
-
         this.windowOverlapOffset = (int) (WINDOW_OVERLAP * (double) WINDOW_SIZE);
     }
 
+    /**
+     * Extract method. Main method to run the feature extraction process.
+     *
+     * @param audioBytes  byte[]. The byte array for an audio file.
+     * @param audioFormat AudioFormat. The audio format information for a audio file
+     * @return a MultivariateNormalDistribution model that represents an audio file.
+     * @throws Exception
+     */
     public MultivariateNormalDistribution extract(byte[] audioBytes, AudioFormat audioFormat) throws Exception {
 
         double[] samples = extractSamples(audioBytes, audioFormat);
@@ -50,15 +64,39 @@ public class FeatureExtractionController {
         return multivariateNormalDistributionModel.build(getFeatureVectorList(results));
     }
 
+    /**
+     * Gets an AudioInputStream for a audio file
+     *
+     * @param file The audio file to process.
+     * @return AudioInputStream of the supplied audio file
+     * @throws IOException                   If there is in IO exception relating to opening the supplied file.
+     * @throws UnsupportedAudioFileException If the supplied audio file is in the wrong format.
+     */
     public AudioInputStream getFormattedAudioInputStream(File file) throws IOException, UnsupportedAudioFileException {
         return audioStreamController.setAudioInputStream(file);
     }
 
+    /**
+     * Extracts audio samples from a given audio byte[] array.
+     *
+     * @param audioBytes  byte[] extracted from a audio file.
+     * @param audioFormat AudioFormat of a audio file
+     * @return a double[] of samples from a audio file.
+     * @throws Exception
+     */
     protected double[] extractSamples(byte[] audioBytes, AudioFormat audioFormat) throws Exception {
         return audioSampleController.getSamplesInMono(audioBytes, audioFormat);
     }
 
 
+    /**
+     * Main method to extract the audio features.
+     *
+     * @param samples           double[] samples of a audio file.
+     * @param featuresToExtract List<Feature>. List of features to extract.
+     * @return double[][][]. Arrays containing all the feature values for each window of audio.
+     * Array format is: [window][feature][values]
+     */
     protected double[][][] getFeatures(double[] samples, List<Feature> featuresToExtract) {
         int[] windowStartPositions = calculateWindowStartPositions(samples.length);
 
@@ -66,52 +104,9 @@ public class FeatureExtractionController {
 
         double[][][] results = new double[windowStartPositions.length][featuresToExtract.size()][];
 
-        System.out.println("loop started");
-
-//
-//        List<double[]> windows = new ArrayList<>();
-//
-//        IntStream.range(0, windowStartPositions.length).forEach(win -> windows.add(fillWindowWithSamples(samples, windowStartPositions, win)));
-//
-//        System.out.println("window samples calculated");
-//        IntStream.range(0, windows.size()).forEach(x -> {
-//
-//            List<double[]> values = featuresToExtract.stream()
-//                    .map(f -> f.extractFeature(windows.get(x), samplingRate))
-//                    .collect(Collectors.toList());
-//
-//            for (int i = 0; i < values.size(); i++) {
-//                // Loops over list of features extracted values. Add them to result array.
-//                results[x][i] = values.get(i);
-//            }
-//
-//        });
-
-
-
         for (int win = 0; win < windowStartPositions.length; win++) {
 
-//            double[] window = fillWindowWithSamples(samples, windowStartPositions, win);
-
-            double[] window = new double[WINDOW_SIZE];
-
-            // Set window sample positions
-            int startSample = windowStartPositions[win];
-            int endSample = startSample + WINDOW_SIZE - 1;
-
-            // Get the samples for the current window
-            if (endSample < samples.length) {
-                System.arraycopy(samples, startSample, window, 0, endSample + 1 - startSample);
-            } else {
-                // Case when end of window is larger than the number of samples. i.e reached then end of the file
-                // Pad the end of the window with zeros.
-                for (int sample = startSample; sample <= endSample; sample++) {
-                    if (sample < samples.length)
-                        window[sample - startSample] = samples[sample];
-                    else
-                        window[sample - startSample] = 0.0;
-                }
-            }
+            double[] window = fillWindowWithSamples(samples, windowStartPositions, win);
 
             List<double[]> values = featuresToExtract.stream()
                     .map(f -> f.extractFeature(window, samplingRate))
@@ -123,11 +118,17 @@ public class FeatureExtractionController {
             }
         }
 
-        System.out.println("loop ended");
-
         return results;
     }
 
+    /**
+     * Method to return an array of samples for a single window.
+     *
+     * @param samples              double[] All the samples of a file.
+     * @param windowStartPositions int[] All the window start positions for the file.
+     * @param win                  int. The current window position
+     * @return double[]. Samples for the current window position.
+     */
     private double[] fillWindowWithSamples(double[] samples, int[] windowStartPositions, int win) {
 
         double[] window = new double[WINDOW_SIZE];
@@ -140,19 +141,27 @@ public class FeatureExtractionController {
         if (endSample < samples.length) {
             System.arraycopy(samples, startSample, window, 0, endSample + 1 - startSample);
         } else {
-            // Case when end of window is larger than the number of samples. i.e reached then end of the file
-            // Pad the end of the window with zeros.
+
             for (int sample = startSample; sample <= endSample; sample++) {
                 if (sample < samples.length)
                     window[sample - startSample] = samples[sample];
-                else
+                else {
+                    // Case when end of window is larger than the number of samples. i.e reached then end of the file
+                    // Pad the end of the window with zeros.
                     window[sample - startSample] = 0.0;
+                }
             }
         }
 
         return window;
     }
 
+    /**
+     * Given the length of all the samples, calculate the positions of the start of all the windows.
+     *
+     * @param samplesLength int. Length of all the samples
+     * @return int[]. All the window start positions.
+     */
     protected int[] calculateWindowStartPositions(int samplesLength) {
 
         LinkedList<Integer> windowStartPositionsList = new LinkedList<>();
@@ -172,9 +181,17 @@ public class FeatureExtractionController {
         return windowStartPositions;
     }
 
+    /**
+     * Translates the [window][feature][value] results array to a list of double[] vectors.
+     * Each single double[] vector represents a combination of the different feature values for each window.
+     * For example: [MFCCs & RMS & Zero crossing rate]
+     *
+     * @param featureResults Full results array. [window][feature][value]
+     * @return List<double[]> List of complete feature vector for each window.
+     */
     protected List<double[]> getFeatureVectorList(double[][][] featureResults) {
 
-        // featureResults structure: [window][feature][values]
+        // featureResults array structure: [window][feature][values]
 
         List<double[]> aggregatedFeatureVectorList = new ArrayList<>();
         List<double[]> featureVectorList = new ArrayList<>();
@@ -188,12 +205,13 @@ public class FeatureExtractionController {
                     .map(Arrays::stream)
                     .map(DoubleStream::boxed)
                     .forEach(d -> d.forEach(featureValues::add));
-
+//
 //            for (double[] featureVector : featureVectorList) {
 //                for (double featureVectorValue : featureVector) {
 //                    featureValues.add(featureVectorValue);
 //                }
 //            }
+
             aggregatedFeatureVectorList.add(ArrayUtils.toPrimitive(featureValues.toArray(new Double[featureValues.size()])));
             featureVectorList.clear();
             featureValues.clear();
@@ -203,7 +221,7 @@ public class FeatureExtractionController {
     }
 
 
-//    Unused at the moment! Possible delete later
+//    Code from previous prototypes. Not currently used!
 
 
     // Used by async method
