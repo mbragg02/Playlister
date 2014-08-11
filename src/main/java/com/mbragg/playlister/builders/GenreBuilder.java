@@ -11,7 +11,7 @@ import java.util.List;
 import java.util.Map;
 
 /**
- * GenreBuilder class
+ * GenreBuilder. Single public Build method that returns a Map of genres/sub genres.
  *
  * @author Michael Bragg
  */
@@ -40,6 +40,11 @@ public class GenreBuilder {
         return allGenres;
     }
 
+    /**
+     * Saves to genre Map through the DAO to the database.
+     *
+     * @param allGenres Map<String, List<String>>. The genre/sub genre mapping.
+     */
     private void insert(Map<String, List<String>> allGenres) {
 
         for (String genreName : allGenres.keySet()) {

@@ -20,7 +20,8 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 /**
- * PlaylistBuilder
+ * PlaylistBuilder. Build method to construct a playlist (a list a Track objects).
+ * Includes methods to launch & export the playlist.
  *
  * @author Michael Bragg
  */
@@ -36,10 +37,11 @@ public class PlaylistBuilder {
     private List<String> filePaths;
 
     /**
-     * Build a playlist file from a given list of tracks.
+     * Build a playlist file from a given list of Tracks.
+     * File paths are extracted then passed to a write method to batchAudioByteExtraction the playlist file.
      *
      * @param results List of tracks to form the playlist from.
-     * @return the playlist file.
+     * @return List<Track>. The list of Tracks are return.
      */
     public List<Track> build(List<Track> results) {
         playlistFile = getSourceDirectoryPath();
@@ -51,14 +53,13 @@ public class PlaylistBuilder {
         write(filePaths);
         logger.log(Level.INFO, "\"" + playlistFilename + "\" created successfully. [" + results.size() + " tracks]");
 
-
         return results;
     }
 
     /**
      * Write the supplied list of absolute file paths to a file
      *
-     * @param filePaths A list of Strings.
+     * @param filePaths A list of Strings. Absolute file paths to the audio files.
      */
     protected void write(List<String> filePaths) {
 
@@ -90,6 +91,8 @@ public class PlaylistBuilder {
 
     /**
      * Gets the file path of the current executing code - i.e. the directory of a .jar package
+     * Used for determining where to write the new playlist file:
+     * If the application is being executed from within a .jar package, the new file needs to be written outside of it.
      *
      * @return a File for this directory.
      */
@@ -103,7 +106,8 @@ public class PlaylistBuilder {
         String path = file.toPath().resolve(playlistFilename).toString();
 
         // Remove to file: prefix (If the code is being executed from within a .jar)
-        if (path.startsWith("file:")) path = path.substring(5, path.length());
+        String prefix = "file:";
+        if (path.startsWith(prefix)) path = path.substring(prefix.length(), path.length());
 
         return new File(path);
     }
@@ -124,7 +128,7 @@ public class PlaylistBuilder {
 
 
     /**
-     * Option to write the playlist to a supplied file.
+     * Ability to write a playlist to a supplied file.
      *
      * @param file The directory where the file will be written to.
      */
@@ -145,7 +149,7 @@ public class PlaylistBuilder {
                 try {
                     fileWriter.close();
                 } catch (IOException e) {
-                    logger.log(Level.ERROR, e.getStackTrace());
+                    logger.log(Level.ERROR, "Error closing the fileWriter in PlaylistBuilder export method:" + e.getMessage());
                 }
 
             }

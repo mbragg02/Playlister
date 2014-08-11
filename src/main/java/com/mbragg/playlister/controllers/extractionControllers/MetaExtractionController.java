@@ -1,4 +1,4 @@
-package com.mbragg.playlister.controllers;
+package com.mbragg.playlister.controllers.extractionControllers;
 
 
 import com.mbragg.playlister.factories.TrackMetaFactory;

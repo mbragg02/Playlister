@@ -1,5 +1,6 @@
-package com.mbragg.playlister.controllers;
+package com.mbragg.playlister.controllers.extractionControllers;
 
+import com.mbragg.playlister.controllers.extractionControllers.MetaExtractionController;
 import org.junit.Before;
 import org.junit.Test;
 

@@ -1,8 +1,7 @@
 package com.mbragg.playlister.builders;
 
-import com.mbragg.playlister.controllers.FeatureExtractionController;
-import com.mbragg.playlister.controllers.MetaExtractionController;
-import com.mbragg.playlister.controllers.audioControllers.AudioBytesController;
+import com.mbragg.playlister.controllers.extractionControllers.FeatureExtractionController;
+import com.mbragg.playlister.controllers.extractionControllers.MetaExtractionController;
 import com.mbragg.playlister.dao.DAO;
 import com.mbragg.playlister.entitys.Track;
 import com.mbragg.playlister.factories.TrackFactory;
@@ -16,149 +15,73 @@ import org.jaudiotagger.audio.exceptions.InvalidAudioFrameException;
 import org.jaudiotagger.audio.exceptions.ReadOnlyFileException;
 import org.jaudiotagger.tag.TagException;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
 
 import javax.sound.sampled.AudioFormat;
-import javax.sound.sampled.AudioInputStream;
-import javax.sound.sampled.UnsupportedAudioFileException;
 import java.io.File;
 import java.io.IOException;
-import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-import java.util.concurrent.Future;
-import java.util.stream.Collectors;
 
 
+/**
+ * TrackBuilder class. Methods for building Track objects.
+ *
+ * @author Michael Bragg
+ */
 @Component
 public class TrackBuilder {
 
-    public static final int NUMBER_OF_THREADS = 5;
     private final DAO dao;
+    private final GenreBuilder genreBuilder;
     private MetaExtractionController metaExtractionController;
     private FeatureExtractionController featureExtractionController;
 
     @Autowired
     private Logger logger;
 
-    @Autowired
-    private AudioBytesController audioBytesController;
-
+    @Value("${genresJSONFilename}")
+    private String genresJSONFilename;
     private Map<String, List<String>> allGenres;
 
     @Autowired
-    public TrackBuilder(DAO dao, MetaExtractionController metaExtractionController, FeatureExtractionController featureExtractionController) {
+    public TrackBuilder(DAO dao, MetaExtractionController metaExtractionController, FeatureExtractionController featureExtractionController, GenreBuilder genreBuilder) {
         this.dao = dao;
+        this.genreBuilder = genreBuilder;
         this.metaExtractionController = metaExtractionController;
         this.featureExtractionController = featureExtractionController;
+        allGenres = genreBuilder.build(genresJSONFilename);
     }
 
-    // For command line application
-//    public void build(List<File> files, Map<String, List<String>> allGenres) {
-//
-//        this.allGenres = allGenres;
-//        logger.log(Level.INFO, "Total files in your library: " + files.size());
-//
-//        int fileCounter = 0;
-//
-//        for (File file : files) {
-//            if (!dao.trackExists(file.getName())) {
-//                logger.log(Level.INFO, "[" + ++fileCounter + " of " + files.size() + "] " + file.getName());
-//
-//                buildTrack(file);
-//            }
-//        }
-//    }
+    /**
+     * Build method. From the supplied audio file parameters, a model and track object are build, and saved with the DAO.
+     *
+     * @param file        File. The audio file.
+     * @param audioBytes  byte[]. Array of bytes representing the audio.
+     * @param audioFormat AudioFormat. The extracted and formatted audio file format information.
+     * @return a Track object.
+     */
+    public Track build(File file, byte[] audioBytes, AudioFormat audioFormat) {
 
+        Track track = TrackFactory.getInstance().getTrack();
 
-    public List<File> batchBuild(List<File> files, Map<String, List<String>> allGenres) {
-        this.allGenres = allGenres;
+        track = addMetaDataToTrack(file, track);
+        track = addDistributionModelToTrack(track, audioBytes, audioFormat);
 
-        logger.log(Level.INFO, "Total files in your library: " + files.size());
-
-        List<File> filesToProcess = files.stream().filter(f -> !dao.trackExists(f.getName())).collect(Collectors.toList());
-
-        if (filesToProcess.isEmpty()) {
-            logger.log(Level.INFO, "No new files to process");
-        } else {
-            logger.log(Level.INFO, "Files to process: " + filesToProcess.size());
-
-        }
-
-        return filesToProcess;
-    }
-
-
-    public Map<Future<byte[]>, AudioFormat> batchExtraction(List<File> filesToProcessBuffer) throws InterruptedException {
-
-        Map<Future<byte[]>, AudioFormat> result = new HashMap<>();
-
-        logger.log(Level.INFO, "Audio Extraction batch jobs starting [" + NUMBER_OF_THREADS + "]");
-
-        try {
-
-            for (File file : filesToProcessBuffer) {
-                AudioInputStream audioInputStream = featureExtractionController.getFormattedAudioInputStream(file);
-                result.put(audioBytesController.getBytesFromAudioInputStream(audioInputStream), audioInputStream.getFormat());
-            }
-
-            for (Future<byte[]> audioByteExtractionThread : result.keySet()) {
-                while (!audioByteExtractionThread.isDone()) Thread.sleep(10);
-            }
-
-        } catch (UnsupportedAudioFileException | IOException e) {
-            logger.log(Level.WARN, e.getMessage());
-        }
-
-        logger.log(Level.INFO, "Batch jobs complete");
-
-        return result;
-
-    }
-
-
-
-
-    // For command line application
-//    public Track buildTrack(File file) {
-//        Track track = setTrackMetaData(TrackFactory.getInstance().getTrack(), file);
-//
-//
-//        try {
-//            track.setFeatures(featureExtractionController.extract(file));
-//        } catch (Exception e) {
-//            e.printStackTrace();
-//        }
-//        dao.saveTrack(track);
-//
-//        return track;
-//    }
-
-
-
-    public Track buildTrack(File file, byte[] audioBytes, AudioFormat audioFormat) {
-
-        Track track = setTrackMetaData(TrackFactory.getInstance().getTrack(), file);
-
-        try {
-//            track.setFeatures(featureExtractionController.extract(audioBytes, audioFormat));
-            MultivariateNormalDistribution model = featureExtractionController.extract(audioBytes, audioFormat);
-
-            RealMatrix matrix = model.getCovariances();
-            double[] means = model.getMeans();
-            for (int i = 0; i < matrix.getColumnDimension(); i++) {
-                track.setModelProperty("co_row" + i, matrix.getRow(i));
-            }
-            track.setModelProperty("means", means);
-            dao.saveTrack(track);
-        } catch (Exception e) {
-            logger.log(Level.WARN, e.getMessage());
-        }
+        dao.saveTrack(track);
 
         return track;
     }
 
-    private Track setTrackMetaData(Track track, File file) {
+    /**
+     * Set the metadata information for the supplied Track object from the supplied audio file.
+     *
+     * @param file  File. The audio file.
+     * @param track Track. The Track object to add the metadata to.
+     * @return a reference to the track object that was passed in.
+     */
+    protected Track addMetaDataToTrack(File file, Track track) {
 
         try {
             Map<String, String> meta = metaExtractionController.parse(file);
@@ -170,13 +93,23 @@ public class TrackBuilder {
             track.setSubGenre(meta.get("GENRE"));
             track.setYear(meta.get("YEAR"));
             track.setGenre(getGenreCategory(meta.get("GENRE")));
-        } catch (ReadOnlyFileException | CannotReadException | InvalidAudioFrameException | IOException | TagException e) {
-            logger.log(Level.WARN, e.getMessage());
+        } catch (CannotReadException | InvalidAudioFrameException | TagException e) {
+            logger.log(Level.WARN, "Invalid file exception: " + e.getMessage());
+        } catch (IOException e) {
+            logger.log(Level.WARN, "IO Exception parsing the audio file: " + e.getMessage());
+        } catch (ReadOnlyFileException e) {
+            logger.log(Level.WARN, "Supplied file is read only: " + e.getMessage());
         }
         return track;
     }
 
-    String getGenreCategory(String subGenre) {
+    /**
+     * Method to return the high-level genre category for the supplied sub genre.
+     *
+     * @param subGenre String. The genre string extracted from an audio file.
+     * @return String. The high-level genre category, or an empty string if none found.
+     */
+    protected String getGenreCategory(String subGenre) {
 
         String formattedSubGenre = StringTools.formatter(subGenre);
 
@@ -187,12 +120,71 @@ public class TrackBuilder {
             if (StringTools.fuzzyEquals(formattedSubGenre, keyGenre)) return keyGenre;
 
             for (String subGenreValue : entry.getValue()) {
-
                 if (StringTools.fuzzyEquals(formattedSubGenre, StringTools.formatter(subGenreValue))) return keyGenre;
             }
         }
         return "";
     }
 
+    /**
+     * For the supplied Track, builds and sets the Multivariate Normal Distribution model.
+     *
+     * @param track       Track. The track to build the model for.
+     * @param audioBytes  byte[]. Array of bytes representing the audio.
+     * @param audioFormat AudioFormat. The extracted and formatted audio file format information.
+     * @return Track. A reference to the track object.
+     */
+    protected Track addDistributionModelToTrack(Track track, byte[] audioBytes, AudioFormat audioFormat) {
+
+        try {
+            MultivariateNormalDistribution model = featureExtractionController.extract(audioBytes, audioFormat);
+
+            RealMatrix matrix = model.getCovariances();
+            double[] means = model.getMeans();
+
+            for (int i = 0; i < matrix.getColumnDimension(); i++) {
+                track.setModelProperty("co_row" + i, matrix.getRow(i));
+            }
+            track.setModelProperty("means", means);
+
+        } catch (Exception e) {
+            logger.log(Level.WARN, "MultivariateNormalDistribution construction exception: " + e.getMessage());
+        }
+        return track;
+    }
+
 
 }
+
+
+// For command line application
+//    public void batchAudioByteExtraction(List<File> files, Map<String, List<String>> allGenres) {
+//
+//        this.allGenres = allGenres;
+//        logger.log(Level.INFO, "Total files in your library: " + files.size());
+//
+//        int fileCounter = 0;
+//
+//        for (File file : files) {
+//            if (!dao.trackExists(file.getName())) {
+//                logger.log(Level.INFO, "[" + ++fileCounter + " of " + files.size() + "] " + file.getName());
+//
+//                batchAudioByteExtraction(file);
+//            }
+//        }
+//    }
+
+// For command line application
+//    public Track batchAudioByteExtraction(File file) {
+//        Track track = addMetaDataToTrack(TrackFactory.getInstance().getTrack(), file);
+//
+//
+//        try {
+//            track.setFeatures(featureExtractionController.extract(file));
+//        } catch (Exception e) {
+//            e.printStackTrace();
+//        }
+//        dao.saveTrack(track);
+//
+//        return track;
+//    }

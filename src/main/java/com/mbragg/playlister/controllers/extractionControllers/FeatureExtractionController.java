@@ -1,4 +1,4 @@
-package com.mbragg.playlister.controllers;
+package com.mbragg.playlister.controllers.extractionControllers;
 
 import com.mbragg.playlister.controllers.audioControllers.AudioSampleController;
 import com.mbragg.playlister.controllers.audioControllers.AudioStreamController;
@@ -11,10 +11,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 import javax.sound.sampled.AudioFormat;
-import javax.sound.sampled.AudioInputStream;
-import javax.sound.sampled.UnsupportedAudioFileException;
-import java.io.File;
-import java.io.IOException;
 import java.util.*;
 import java.util.stream.Collectors;
 import java.util.stream.DoubleStream;
@@ -55,25 +51,13 @@ public class FeatureExtractionController {
      */
     public MultivariateNormalDistribution extract(byte[] audioBytes, AudioFormat audioFormat) throws Exception {
 
-        double[] samples = extractSamples(audioBytes, audioFormat);
+        double[] samples = getSamples(audioBytes, audioFormat);
 
         List<Feature> featuresToExtract = FeatureFactory.getInstance().getFeatureList();
 
         double[][][] results = getFeatures(samples, featuresToExtract);
 
         return multivariateNormalDistributionModel.build(getFeatureVectorList(results));
-    }
-
-    /**
-     * Gets an AudioInputStream for a audio file
-     *
-     * @param file The audio file to process.
-     * @return AudioInputStream of the supplied audio file
-     * @throws IOException                   If there is in IO exception relating to opening the supplied file.
-     * @throws UnsupportedAudioFileException If the supplied audio file is in the wrong format.
-     */
-    public AudioInputStream getFormattedAudioInputStream(File file) throws IOException, UnsupportedAudioFileException {
-        return audioStreamController.setAudioInputStream(file);
     }
 
     /**
@@ -84,7 +68,7 @@ public class FeatureExtractionController {
      * @return a double[] of samples from a audio file.
      * @throws Exception
      */
-    protected double[] extractSamples(byte[] audioBytes, AudioFormat audioFormat) throws Exception {
+    protected double[] getSamples(byte[] audioBytes, AudioFormat audioFormat) throws Exception {
         return audioSampleController.getSamplesInMono(audioBytes, audioFormat);
     }
 
@@ -226,18 +210,18 @@ public class FeatureExtractionController {
 
     // Used by async method
 //    public double[] extract(byte[] audioBytes, AudioFormat audioFormat) throws Exception {
-//        extractSamples(audioBytes, audioFormat);
+//        getSamples(audioBytes, audioFormat);
 //        return getAverageVector(getFeatures());
 //    }
 
 //    public double[] extract(File file) throws Exception {
-//        extractSamples(file);
+//        getSamples(file);
 //        double[][][] vals = getFeatures();
 //        return getAverageVector(vals);
 //    }
 
-//    private void extractSamples(File file) throws Exception {
-//        AudioInputStream formattedAudioInputStream = audioStreamController.setAudioInputStream(file);
+//    private void getSamples(File file) throws Exception {
+//        AudioInputStream formattedAudioInputStream = audioStreamController.getAudioInputStream(file);
 //        samples = audioSampleController.getSamplesInMono(formattedAudioInputStream);
 //
 //    }

@@ -20,7 +20,7 @@ public class AudioStreamController {
     public AudioStreamController() {
     }
 
-    public AudioInputStream setAudioInputStream(File file) throws IOException, UnsupportedAudioFileException {
+    public AudioInputStream getAudioInputStream(File file) throws IOException, UnsupportedAudioFileException {
 
         AudioInputStream audioInputStream = AudioSystem.getAudioInputStream(file);
         AudioFormat audioFormat = audioInputStream.getFormat();
@@ -47,6 +47,4 @@ public class AudioStreamController {
                 channels * 2, frameRate,
                 true);
     }
-
-
 }

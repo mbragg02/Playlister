@@ -26,7 +26,7 @@ public class DirectoryBuilder {
     Logger logger;
 
     /**
-     * Traverses a supplied file directory to build/return a list of files.
+     * Traverses a supplied file directory to batchAudioByteExtraction/return a list of files.
      * Files must have to same extension as the supplied String suffix.
      * Hidden files are also ignored.
      *
@@ -46,7 +46,7 @@ public class DirectoryBuilder {
                     .filter(HiddenFileFilter.VISIBLE::accept)
                     .collect(Collectors.toList());
         } catch (IOException e) {
-           logger.log(Level.WARN, "Exception scanning music directory:" + e.getMessage());
+            logger.log(Level.WARN, "Exception scanning music directory:" + e.getMessage());
         }
         return files;
     }

@@ -34,49 +34,49 @@ public class AudioStreamControllerTest {
 
     @Test
     public void testSetAudioInputStreamGetChannels() throws Exception {
-        AudioInputStream audioInputStream = audioStreamController.setAudioInputStream(file);
+        AudioInputStream audioInputStream = audioStreamController.getAudioInputStream(file);
 
         assertEquals(audioInputStream.getFormat().getChannels(), 2);
     }
 
     @Test
     public void testSetAudioInputStreamGetFrameSize() throws Exception {
-        AudioInputStream audioInputStream = audioStreamController.setAudioInputStream(file);
+        AudioInputStream audioInputStream = audioStreamController.getAudioInputStream(file);
 
         assertEquals(audioInputStream.getFormat().getFrameSize(), 4);
     }
 
     @Test
     public void testSetAudioInputStreamGetSampleSizeInBits() throws Exception {
-        AudioInputStream audioInputStream = audioStreamController.setAudioInputStream(file);
+        AudioInputStream audioInputStream = audioStreamController.getAudioInputStream(file);
 
         assertEquals(audioInputStream.getFormat().getSampleSizeInBits(), 16);
     }
 
     @Test
     public void testSetAudioInputStreamGetEncoding() throws Exception {
-        AudioInputStream audioInputStream = audioStreamController.setAudioInputStream(file);
+        AudioInputStream audioInputStream = audioStreamController.getAudioInputStream(file);
 
         assertEquals(audioInputStream.getFormat().getEncoding().toString(), "PCM_SIGNED");
     }
 
     @Test
     public void testSetAudioInputStreamGetFrameRate() throws Exception {
-        AudioInputStream audioInputStream = audioStreamController.setAudioInputStream(file);
+        AudioInputStream audioInputStream = audioStreamController.getAudioInputStream(file);
 
         assertEquals(audioInputStream.getFormat().getFrameRate(), 44100.0f, DELTA);
     }
 
     @Test
     public void testSetAudioInputStreamGetSampleRate() throws Exception {
-        AudioInputStream audioInputStream = audioStreamController.setAudioInputStream(file);
+        AudioInputStream audioInputStream = audioStreamController.getAudioInputStream(file);
 
         assertEquals(audioInputStream.getFormat().getSampleRate(), 44100.0f, DELTA);
     }
 
     @Test
     public void testGetSampleRate() throws Exception{
-        audioStreamController.setAudioInputStream(file);
+        audioStreamController.getAudioInputStream(file);
 
         assertEquals(audioStreamController.getSampleRate(), 44100.0f, DELTA);
     }
