@@ -48,7 +48,7 @@ public class AudioBytesControllerTest {
 //    @Test
 //    public void testGetEmptyBytesFromAudioInputStream() throws Exception {
 //        when(audioInputStream.read(any(), anyInt(), anyInt())).thenReturn(0);
-//        Future<byte[]> actual = audioBytesController.getBytesFromAudioInputStream(audioInputStream);
+//        Future<byte[]> actual = audioBytesController.extract(audioInputStream);
 //        assertTrue(actual.get().length == 10);
 //    }
 //

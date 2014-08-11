@@ -9,6 +9,13 @@ import javax.sound.sampled.UnsupportedAudioFileException;
 import java.io.File;
 import java.io.IOException;
 
+/**
+ * Audio Stream Controller.
+ * <p>
+ * Class for extracting and formatting a AudioInputStream from a File.
+ *
+ * @author Michael Bragg
+ */
 @Component
 public class AudioStreamController {
 
@@ -20,6 +27,14 @@ public class AudioStreamController {
     public AudioStreamController() {
     }
 
+    /**
+     * Gets a audio input stream from a file.
+     *
+     * @param file File. Input audio file.
+     * @return AudioInputStream. Formatted audio input stream.
+     * @throws IOException                   If the supplied file encounters a IO error.
+     * @throws UnsupportedAudioFileException If the supplied file is unsupported.
+     */
     public AudioInputStream getAudioInputStream(File file) throws IOException, UnsupportedAudioFileException {
 
         AudioInputStream audioInputStream = AudioSystem.getAudioInputStream(file);
@@ -34,6 +49,11 @@ public class AudioStreamController {
         return AudioSystem.getAudioInputStream(decodedAudioFormat, audioInputStream);
     }
 
+    /**
+     * Returns a formatted audio format.
+     *
+     * @return AudioFormat.
+     */
     public float getSampleRate() {
         return sampleRate;
     }

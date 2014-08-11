@@ -134,13 +134,6 @@ public class AudioSampleControllerTest {
     }
 
     @Test
-    public void testGetNumberBytesNeeded() throws Exception {
-        int actual = audioSampleController.getNumberBytesNeeded(audioFormat);
-
-        assertEquals(2, actual);
-    }
-
-    @Test
     public void testFindMaximumSampleValue() throws Exception {
         double actual = audioSampleController.findMaximumSampleValue(8);
 

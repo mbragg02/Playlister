@@ -81,7 +81,7 @@ public class AudioBatchController {
 
             for (File file : filesToProcessBuffer) {
                 AudioInputStream audioInputStream = audioStreamController.getAudioInputStream(file);
-                result.put(audioBytesController.getBytesFromAudioInputStream(audioInputStream), audioInputStream.getFormat());
+                result.put(audioBytesController.extract(audioInputStream), audioInputStream.getFormat());
             }
 
             for (Future<byte[]> audioByteExtractionThread : result.keySet()) {
