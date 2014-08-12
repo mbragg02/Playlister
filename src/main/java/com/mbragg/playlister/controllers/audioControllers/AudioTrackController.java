@@ -50,7 +50,7 @@ public class AudioTrackController {
         this.dao = dao;
         this.metaExtractionController = metaExtractionController;
         this.featureExtractionController = featureExtractionController;
-        allGenres = genreExtractionController.build(genresJSONFilename);
+        allGenres = genreExtractionController.build();
     }
 
     /**

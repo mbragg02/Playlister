@@ -30,10 +30,9 @@ public class GenreExtractionController {
     /**
      * Builds a Map of genre relationships from a given filename (JSON)
      *
-     * @param filename String. The name of the JSON file containing the genre relationships
      * @return A Map with the generic genres as keys, with lists of sub genres as values.
      */
-    public Map<String, List<String>> build(String filename) {
+    public Map<String, List<String>> build() {
 
         Map<String, List<String>> allGenres = genreJSONParser.parse();
         insert(allGenres);

@@ -40,7 +40,7 @@ public class GenreExtractionControllerTest {
     public void testBuildNoNewGenresToAdd() throws Exception {
         when(dao.genreExists("rock")).thenReturn(true);
 
-        genreExtractionController.build(anyString());
+        genreExtractionController.build();
 
         verify(dao, never()).saveGenre(any());
     }
@@ -49,7 +49,7 @@ public class GenreExtractionControllerTest {
     public void testBuildWithNewGenresToSave() {
         when(dao.genreExists("rock")).thenReturn(false);
 
-        genreExtractionController.build(anyString());
+        genreExtractionController.build();
 
         verify(dao, times(1)).saveGenre(any());
     }
