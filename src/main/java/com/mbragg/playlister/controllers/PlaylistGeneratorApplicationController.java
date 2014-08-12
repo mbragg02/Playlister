@@ -17,7 +17,6 @@ import java.io.File;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
-import java.util.concurrent.ExecutionException;
 import java.util.concurrent.Future;
 
 /**
@@ -52,7 +51,7 @@ public class PlaylistGeneratorApplicationController implements ApplicationContro
     }
 
     @Override
-    public List<Track> query(String fileName, int sizeOfResult, boolean restrictByGenre) throws InterruptedException, ExecutionException {
+    public List<Track> query(String fileName, int sizeOfResult, boolean restrictByGenre) {
         if (dao.trackExists(fileName)) {
             return playlist.build(dao.query(fileName, sizeOfResult, restrictByGenre));
         }

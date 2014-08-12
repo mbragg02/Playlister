@@ -32,7 +32,7 @@ public class GenreJSONParser implements JSONParser {
     }
 
     @Override
-    public Map<String, List<String>> parse(String filename) {
+    public Map<String, List<String>> parse() {
 
         try {
             Resource json = new ClassPathResource("genres.json");

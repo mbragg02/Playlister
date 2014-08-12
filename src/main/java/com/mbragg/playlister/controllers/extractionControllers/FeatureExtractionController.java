@@ -66,9 +66,8 @@ public class FeatureExtractionController {
      * @param audioBytes  byte[] extracted from a audio file.
      * @param audioFormat AudioFormat of a audio file
      * @return a double[] of samples from a audio file.
-     * @throws Exception
      */
-    protected double[] getSamples(byte[] audioBytes, AudioFormat audioFormat) throws Exception {
+    protected double[] getSamples(byte[] audioBytes, AudioFormat audioFormat) {
         return samples.getSamplesInMono(audioBytes, audioFormat);
     }
 
@@ -170,7 +169,7 @@ public class FeatureExtractionController {
      * For example: [MFCCs & RMS & Zero crossing rate]
      *
      * @param featureResults Full results array. [window][feature][value]
-     * @return List<double[]> List of complete feature vector for each window.
+     * @return List of complete feature vector for each window.
      */
     protected List<double[]> getFeatureVectorList(double[][][] featureResults) {
 

@@ -31,7 +31,7 @@ public class GenreExtractionControllerTest {
         Map<String, List<String>> testGenres = new HashMap<>();
         testGenres.put("Rock", new ArrayList<>());
 
-        when(jsonParser.parse(anyString())).thenReturn(testGenres);
+        when(jsonParser.parse()).thenReturn(testGenres);
 
         genreExtractionController = new GenreExtractionController(dao, jsonParser);
     }

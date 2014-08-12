@@ -1,7 +1,6 @@
 package com.mbragg.playlister.tools;
 
 import com.mbragg.playlister.tools.numbers.Statistics;
-import org.junit.Before;
 import org.junit.Test;
 import static org.junit.Assert.assertEquals;
 
@@ -10,10 +9,6 @@ public class StatisticsTest {
 
     private static final double DELTA = 1e-15;
 
-
-    @Before
-    public void setUp() throws Exception {
-    }
 
     @Test
     public void testCosineSimilaritySimple() throws Exception {

@@ -1,7 +1,5 @@
 package com.mbragg.playlister.models.entitys;
 
-import com.mbragg.playlister.models.entitys.Genre;
-import com.mbragg.playlister.models.entitys.Track;
 import org.junit.Before;
 import org.junit.Test;
 import org.mockito.Mock;
@@ -13,7 +11,6 @@ public class TrackTest {
 
     private static final double DELTA = 1e-15;
     private Track track;
-    private double[] features;
 
     @Mock
     private Genre genre;
@@ -22,7 +19,6 @@ public class TrackTest {
     public void setUp() throws Exception {
         MockitoAnnotations.initMocks(this);
         track = new Track();
-        features = new double[]{1.0, 2.0, 2.0};
     }
 
     @Test

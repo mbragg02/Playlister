@@ -9,5 +9,5 @@ import java.util.Map;
  * @author Michael Bragg
  */
 public interface JSONParser {
-    Map<String, List<String>> parse(String filename);
+    Map<String, List<String>> parse();
 }

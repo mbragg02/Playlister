@@ -7,7 +7,6 @@ import javax.sound.sampled.AudioFormat;
 import java.io.File;
 import java.util.List;
 import java.util.Map;
-import java.util.concurrent.ExecutionException;
 import java.util.concurrent.Future;
 
 /**
@@ -16,7 +15,7 @@ import java.util.concurrent.Future;
  * @author Michael Bragg
  */
 public interface ApplicationController {
-    List<Track> query(String fileName, int sizeOfResult, boolean restrictByGenre) throws InterruptedException, ExecutionException;
+    List<Track> query(String fileName, int sizeOfResult, boolean restrictByGenre);
 
     boolean trackExists(String fileName);
 
@@ -34,7 +33,5 @@ public interface ApplicationController {
     void deleteDB();
 
     void exportPlaylist(File file);
-
-//    void testPlaylistQuality() throws ExecutionException, InterruptedException;
 
 }

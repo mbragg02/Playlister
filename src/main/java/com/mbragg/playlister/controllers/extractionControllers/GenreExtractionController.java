@@ -35,7 +35,7 @@ public class GenreExtractionController {
      */
     public Map<String, List<String>> build(String filename) {
 
-        Map<String, List<String>> allGenres = genreJSONParser.parse(filename);
+        Map<String, List<String>> allGenres = genreJSONParser.parse();
         insert(allGenres);
         return allGenres;
     }

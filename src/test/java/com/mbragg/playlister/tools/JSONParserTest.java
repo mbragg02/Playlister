@@ -21,7 +21,7 @@ public class JSONParserTest {
 
     @Test
     public void testParse() throws Exception {
-        Map<String, List<String>> result = genreJSONParser.parse("genres.json");
+        Map<String, List<String>> result = genreJSONParser.parse();
 
         for (Map.Entry<String, List<String>> entry : result.entrySet()) {
             List<String> values = entry.getValue();
@@ -29,9 +29,7 @@ public class JSONParserTest {
             assertNotNull(entry.getKey());
             assertNotNull(values);
 
-            for (String x : values) {
-                assertNotNull(x);
-            }
+            values.forEach(org.junit.Assert::assertNotNull);
         }
 
     }
