@@ -1,7 +1,8 @@
-package com.mbragg.playlister.builders;
+package com.mbragg.playlister.models;
 
 import com.mbragg.playlister.configurations.ApplicationConfiguration;
-import com.mbragg.playlister.entitys.Track;
+import com.mbragg.playlister.models.Playlist;
+import com.mbragg.playlister.models.entitys.Track;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -20,10 +21,10 @@ import static org.mockito.MockitoAnnotations.initMocks;
 
 @RunWith(SpringJUnit4ClassRunner.class)
 @ContextConfiguration(classes = ApplicationConfiguration.class)
-public class PlaylistBuilderTest {
+public class PlaylistTest {
 
     @Autowired
-    private PlaylistBuilder playlistBuilder;
+    private Playlist playlist;
 
     @Mock
     private Track track;
@@ -42,15 +43,15 @@ public class PlaylistBuilderTest {
 
     @Test
     public void testBuild() throws Exception {
-        List<Track> actual =playlistBuilder.build(listOfMockTracks);
+        List<Track> actual = playlist.build(listOfMockTracks);
 
         assertEquals("a/test/track/filePath", actual.get(0).getFilePath());
     }
 
     @Test
     public void testGetSourceDirectory() {
-        File actual = playlistBuilder.getSourceDirectoryPath();
-        File testClassFile = new File(PlaylistBuilderTest.class.getProtectionDomain().getCodeSource().getLocation().getPath());
+        File actual = playlist.getSourceDirectoryPath();
+        File testClassFile = new File(PlaylistTest.class.getProtectionDomain().getCodeSource().getLocation().getPath());
 
         assertEquals(testClassFile.getParent() + "/playlist.m3u", actual.toString());
     }
