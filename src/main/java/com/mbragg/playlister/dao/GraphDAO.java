@@ -27,7 +27,7 @@ import java.util.List;
  * @author Michael Bragg
  */
 @Component
-public class DAOImpl implements DAO {
+public class GraphDAO implements DAO {
 
     @Autowired
     MultivariateNormalDistributionModel model;
@@ -40,7 +40,7 @@ public class DAOImpl implements DAO {
     private GenreRepository genreRepository;
 
     @Autowired
-    public DAOImpl(GraphDatabase graphDatabase, GenreRepository genreRepository, TrackRepository trackRepository) {
+    public GraphDAO(GraphDatabase graphDatabase, GenreRepository genreRepository, TrackRepository trackRepository) {
         this.graphDatabase = graphDatabase;
         this.genreRepository = genreRepository;
         this.trackRepository = trackRepository;

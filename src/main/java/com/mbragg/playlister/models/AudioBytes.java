@@ -21,8 +21,12 @@ import java.util.concurrent.Future;
 @Component
 public class AudioBytes {
 
-    @Autowired
     private Logger logger;
+
+    @Autowired
+    public AudioBytes(Logger logger) {
+        this.logger = logger;
+    }
 
     /**
      * Exacts a byte[] from an audio input stream.
@@ -35,35 +39,56 @@ public class AudioBytes {
 
         logger.log(Level.INFO, "Job #" + Thread.currentThread().getId() + " started... ");
 
-        ByteArrayOutputStream byteArrayOutputStream = new ByteArrayOutputStream();
         // Calculate the buffer size to use
         float bufferDuration = 0.25F;
         int bufferOverlap = 2;
-
         int bufferSize = getNumberBytesNeeded(bufferDuration, audioInputStream.getFormat());
+
+
         byte[] byteBuffer = new byte[bufferSize + bufferOverlap];
+        ByteArrayOutputStream byteArrayOutputStream = new ByteArrayOutputStream();
 
-        // Read the bytes into the byteBuffer and then into the ByteArrayOutputStream
-        try {
-            int position = audioInputStream.read(byteBuffer, 0, byteBuffer.length);
-
-            while (position > 0) {
-                position = audioInputStream.read(byteBuffer, 0, byteBuffer.length);
-                byteArrayOutputStream.write(byteBuffer, 0, position);
-            }
-        } catch (IOException e) {
-            logger.log(Level.WARN, "IO Exception reading from the audio input stream: " + e.getMessage());
-
-        }
-
-        byte[] byteArray = byteArrayOutputStream.toByteArray();
+        byte[] byteArray = readIntoByteArrayOutputStream(audioInputStream, byteBuffer, byteArrayOutputStream).toByteArray();
 
         try {
             byteArrayOutputStream.close();
         } catch (IOException e) {
             logger.log(Level.WARN, "Error closing the byte array output stream: " + e.getMessage());
         }
+
         return new AsyncResult<>(byteArray);
+    }
+
+    /**
+     * For a given audioInputStream, converts format to ByteArrayOutputStream. By the means of a buffer.
+     * @param audioInputStream AudioInputStream.
+     * @param byteBuffer byte[] buffer for use in conversion.
+     * @param byteArrayOutputStream ByteArrayOutputStream. New byte array output stream for data to be copied to.
+     * @return ByteArrayOutputStream. Data from audio input stream.
+     */
+    protected ByteArrayOutputStream readIntoByteArrayOutputStream(AudioInputStream audioInputStream, byte[] byteBuffer, ByteArrayOutputStream byteArrayOutputStream) {
+        // Read the bytes into the byteBuffer and then into the ByteArrayOutputStream
+        int offset = 0;
+        try {
+            int numberOfBytesToWrite = audioInputStream.read(byteBuffer, offset, byteBuffer.length);
+
+            while (numberOfBytesToWrite > 0) {
+                numberOfBytesToWrite = audioInputStream.read(byteBuffer, offset, byteBuffer.length);
+
+                byteArrayOutputStream.write(byteBuffer, offset, numberOfBytesToWrite);
+            }
+
+        } catch (IOException e) {
+            logger.log(Level.WARN, "IO Exception reading from the audio input stream: " + e.getMessage());
+        } finally {
+            try {
+                audioInputStream.close();
+            } catch (IOException e) {
+                logger.log(Level.WARN, "Error closing audio input stream: " + e.getMessage());
+            }
+        }
+
+        return byteArrayOutputStream;
     }
 
     /**
