@@ -1,4 +1,4 @@
-package com.mbragg.playlister.controllers.audioControllers;
+package com.mbragg.playlister.models;
 
 import org.springframework.stereotype.Component;
 
@@ -17,14 +17,14 @@ import java.io.IOException;
  * @author Michael Bragg
  */
 @Component
-public class AudioStreamController {
+public class AudioStream {
 
     private float sampleRate;
     private int sampleSizeInBits;
     private int channels;
     private float frameRate;
 
-    public AudioStreamController() {
+    public AudioStream() {
     }
 
     /**

@@ -1,6 +1,6 @@
 package com.mbragg.playlister.relationships;
 
-import com.mbragg.playlister.entitys.Track;
+import com.mbragg.playlister.models.entitys.Track;
 import org.springframework.data.neo4j.annotation.EndNode;
 import org.springframework.data.neo4j.annotation.GraphId;
 import org.springframework.data.neo4j.annotation.RelationshipEntity;

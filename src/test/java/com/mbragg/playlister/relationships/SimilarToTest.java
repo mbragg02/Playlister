@@ -1,6 +1,6 @@
 package com.mbragg.playlister.relationships;
 
-import com.mbragg.playlister.entitys.Track;
+import com.mbragg.playlister.models.entitys.Track;
 import org.junit.Before;
 import org.junit.Test;
 import org.mockito.Mock;

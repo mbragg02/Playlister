@@ -46,7 +46,7 @@ package org.oc.ocvolume.dsp;
 
 /**
  * last updated on June 15, 2002<br>
- * <b>description:</b> feature extraction class used to extract mel-frequency cepstral coefficients from input signal<br>
+ * <b>description:</b> feature extraction class used to parse mel-frequency cepstral coefficients from input signal<br>
  * <b>calls:</b> none<br>
  * <b>called by:</b> volume, train<br>
  * <b>input:</b> speech signal<br>
@@ -315,8 +315,6 @@ public class featureExtraction{
      * performs Hamming Window<br>
      * calls: none<br>
      * called by: featureExtraction
-     * @param frame A frame
-     * @return Processed frame with hamming window applied to it
      */
     private void hammingWindow(){
         double w[] = new double[frameLength];

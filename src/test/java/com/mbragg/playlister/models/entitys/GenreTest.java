@@ -1,5 +1,6 @@
-package com.mbragg.playlister.entitys;
+package com.mbragg.playlister.models.entitys;
 
+import com.mbragg.playlister.models.entitys.Genre;
 import org.junit.Test;
 
 import static org.junit.Assert.assertEquals;

@@ -1,5 +1,7 @@
-package com.mbragg.playlister.entitys;
+package com.mbragg.playlister.models.entitys;
 
+import com.mbragg.playlister.models.entitys.Genre;
+import com.mbragg.playlister.models.entitys.Track;
 import org.junit.Before;
 import org.junit.Test;
 import org.mockito.Mock;

@@ -1,4 +1,4 @@
-package com.mbragg.playlister.tools.json;
+package com.mbragg.playlister.tools.file;
 
 import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
@@ -16,7 +16,7 @@ import java.util.List;
 import java.util.Map;
 
 /**
- * Class to extract the specific genre JSON file, to extract the genre/sub genre relationships.
+ * Class to parse the specific genre JSON file, to parse the genre/sub genre relationships.
  *
  * @author Michael Bragg
  */

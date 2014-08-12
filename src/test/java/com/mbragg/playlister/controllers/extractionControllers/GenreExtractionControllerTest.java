@@ -1,7 +1,7 @@
-package com.mbragg.playlister.builders;
+package com.mbragg.playlister.controllers.extractionControllers;
 
 import com.mbragg.playlister.dao.DAO;
-import com.mbragg.playlister.tools.json.JSONParser;
+import com.mbragg.playlister.tools.file.JSONParser;
 import org.junit.Before;
 import org.junit.Test;
 import org.mockito.Mock;
@@ -14,7 +14,7 @@ import java.util.Map;
 import static org.mockito.Mockito.*;
 import static org.mockito.MockitoAnnotations.initMocks;
 
-public class GenreBuilderTest {
+public class GenreExtractionControllerTest {
 
     @Mock
     private DAO dao;
@@ -22,7 +22,7 @@ public class GenreBuilderTest {
     @Mock
     private JSONParser jsonParser;
 
-    private GenreBuilder genreBuilder;
+    private GenreExtractionController genreExtractionController;
 
     @Before
     public void setUp() throws Exception {
@@ -33,14 +33,14 @@ public class GenreBuilderTest {
 
         when(jsonParser.parse(anyString())).thenReturn(testGenres);
 
-        genreBuilder = new GenreBuilder(dao, jsonParser);
+        genreExtractionController = new GenreExtractionController(dao, jsonParser);
     }
 
     @Test
     public void testBuildNoNewGenresToAdd() throws Exception {
         when(dao.genreExists("rock")).thenReturn(true);
 
-        genreBuilder.build(anyString());
+        genreExtractionController.build(anyString());
 
         verify(dao, never()).saveGenre(any());
     }
@@ -49,7 +49,7 @@ public class GenreBuilderTest {
     public void testBuildWithNewGenresToSave() {
         when(dao.genreExists("rock")).thenReturn(false);
 
-        genreBuilder.build(anyString());
+        genreExtractionController.build(anyString());
 
         verify(dao, times(1)).saveGenre(any());
     }

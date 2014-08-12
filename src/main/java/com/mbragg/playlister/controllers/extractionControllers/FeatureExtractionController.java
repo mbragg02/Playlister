@@ -1,7 +1,7 @@
 package com.mbragg.playlister.controllers.extractionControllers;
 
-import com.mbragg.playlister.controllers.audioControllers.AudioSampleController;
-import com.mbragg.playlister.controllers.audioControllers.AudioStreamController;
+import com.mbragg.playlister.models.Samples;
+import com.mbragg.playlister.models.AudioStream;
 import com.mbragg.playlister.factories.FeatureFactory;
 import com.mbragg.playlister.features.Feature;
 import com.mbragg.playlister.features.MultivariateNormalDistributionModel;
@@ -29,14 +29,14 @@ public class FeatureExtractionController {
     private static final double WINDOW_OVERLAP = 0.0;
     private int windowOverlapOffset;
 
-    private AudioStreamController audioStreamController;
-    private AudioSampleController audioSampleController;
+    private AudioStream audioStream;
+    private Samples samples;
     private MultivariateNormalDistributionModel multivariateNormalDistributionModel;
 
     @Autowired
-    public FeatureExtractionController(AudioStreamController audioStreamController, AudioSampleController audioSampleController, MultivariateNormalDistributionModel multivariateNormalDistributionModel) {
-        this.audioStreamController = audioStreamController;
-        this.audioSampleController = audioSampleController;
+    public FeatureExtractionController(AudioStream audioStream, Samples samples, MultivariateNormalDistributionModel multivariateNormalDistributionModel) {
+        this.audioStream = audioStream;
+        this.samples = samples;
         this.multivariateNormalDistributionModel = multivariateNormalDistributionModel;
         this.windowOverlapOffset = (int) (WINDOW_OVERLAP * (double) WINDOW_SIZE);
     }
@@ -69,21 +69,21 @@ public class FeatureExtractionController {
      * @throws Exception
      */
     protected double[] getSamples(byte[] audioBytes, AudioFormat audioFormat) throws Exception {
-        return audioSampleController.getSamplesInMono(audioBytes, audioFormat);
+        return samples.getSamplesInMono(audioBytes, audioFormat);
     }
 
     /**
-     * Main method to extract the audio features.
+     * Main method to parse the audio features.
      *
      * @param samples           double[] samples of a audio file.
-     * @param featuresToExtract List<Feature>. List of features to extract.
+     * @param featuresToExtract List<Feature>. List of features to parse.
      * @return double[][][]. Arrays containing all the feature values for each window of audio.
      * Array format is: [window][feature][values]
      */
     protected double[][][] getFeatures(double[] samples, List<Feature> featuresToExtract) {
         int[] windowStartPositions = calculateWindowStartPositions(samples.length);
 
-        double samplingRate = audioStreamController.getSampleRate();
+        double samplingRate = audioStream.getSampleRate();
 
         double[][][] results = new double[windowStartPositions.length][featuresToExtract.size()][];
 
@@ -209,12 +209,12 @@ public class FeatureExtractionController {
 
 
     // Used by async method
-//    public double[] extract(byte[] audioBytes, AudioFormat audioFormat) throws Exception {
+//    public double[] parse(byte[] audioBytes, AudioFormat audioFormat) throws Exception {
 //        getSamples(audioBytes, audioFormat);
 //        return getAverageVector(getFeatures());
 //    }
 
-//    public double[] extract(File file) throws Exception {
+//    public double[] parse(File file) throws Exception {
 //        getSamples(file);
 //        double[][][] vals = getFeatures();
 //        return getAverageVector(vals);

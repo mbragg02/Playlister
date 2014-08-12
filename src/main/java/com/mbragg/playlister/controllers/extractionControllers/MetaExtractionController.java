@@ -39,7 +39,7 @@ public class MetaExtractionController {
     /**
      * Extraction method.
      *
-     * @param file File. Audio file to extract data from.
+     * @param file File. Audio file to parse data from.
      * @return A Map of the metadata information. <String, String>
      * @throws ReadOnlyFileException      if the file is read only.
      * @throws CannotReadException        if the file cannot be read.

@@ -1,4 +1,4 @@
-package com.mbragg.playlister.controllers.audioControllers;
+package com.mbragg.playlister.models;
 
 import org.apache.log4j.Level;
 import org.apache.log4j.Logger;
@@ -19,7 +19,7 @@ import java.util.concurrent.Future;
  * Class that extracts audio data as a byte[] from an AudioInputStream.
  */
 @Component
-public class AudioBytesController {
+public class AudioBytes {
 
     @Autowired
     private Logger logger;
@@ -27,7 +27,7 @@ public class AudioBytesController {
     /**
      * Exacts a byte[] from an audio input stream.
      *
-     * @param audioInputStream AudioInputStream. The audio input stream to extract the byte[] from.
+     * @param audioInputStream AudioInputStream. The audio input stream to parse the byte[] from.
      * @return The extracted byte[] data
      */
     @Async

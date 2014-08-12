@@ -1,6 +1,8 @@
 package com.mbragg.playlister.controllers.audioControllers;
 
 import com.mbragg.playlister.dao.DAO;
+import com.mbragg.playlister.models.AudioBytes;
+import com.mbragg.playlister.models.AudioStream;
 import org.apache.log4j.Level;
 import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -29,17 +31,17 @@ public class AudioBatchController {
 
     public static final int NUMBER_OF_THREADS = 5;
     private final DAO dao;
-    private final AudioBytesController audioBytesController;
-    private final AudioStreamController audioStreamController;
+    private final AudioBytes audioBytes;
+    private final AudioStream audioStream;
 
     @Autowired
     Logger logger;
 
     @Autowired
-    public AudioBatchController(DAO dao, AudioBytesController audioBytesController, AudioStreamController audioStreamController) {
+    public AudioBatchController(DAO dao, AudioBytes audioBytes, AudioStream audioStream) {
         this.dao = dao;
-        this.audioStreamController = audioStreamController;
-        this.audioBytesController = audioBytesController;
+        this.audioStream = audioStream;
+        this.audioBytes = audioBytes;
     }
 
     /**
@@ -80,8 +82,8 @@ public class AudioBatchController {
         try {
 
             for (File file : filesToProcessBuffer) {
-                AudioInputStream audioInputStream = audioStreamController.getAudioInputStream(file);
-                result.put(audioBytesController.extract(audioInputStream), audioInputStream.getFormat());
+                AudioInputStream audioInputStream = audioStream.getAudioInputStream(file);
+                result.put(audioBytes.extract(audioInputStream), audioInputStream.getFormat());
             }
 
             for (Future<byte[]> audioByteExtractionThread : result.keySet()) {

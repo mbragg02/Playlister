@@ -1,10 +1,10 @@
 package com.mbragg.playlister.controllers.viewControllers;
 
 import com.mbragg.playlister.controllers.ApplicationController;
-import com.mbragg.playlister.entitys.Track;
+import com.mbragg.playlister.models.entitys.Track;
 import com.mbragg.playlister.services.PlaylistService;
 import com.mbragg.playlister.services.ScanService;
-import com.mbragg.playlister.tools.externalApplicationLauncher.OperatingSystemDetector;
+import com.mbragg.playlister.tools.externalServices.OperatingSystemDetector;
 import com.mbragg.playlister.tools.strings.StringTools;
 import javafx.fxml.FXML;
 import javafx.scene.Node;
@@ -58,6 +58,7 @@ public class ViewController {
 
     @FXML
     private Node view;
+
     @Autowired
     private ApplicationController applicationController;
     @Autowired

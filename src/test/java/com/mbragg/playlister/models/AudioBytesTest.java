@@ -1,5 +1,6 @@
-package com.mbragg.playlister.controllers.audioControllers;
+package com.mbragg.playlister.models;
 
+import com.mbragg.playlister.models.AudioBytes;
 import org.apache.log4j.Logger;
 import org.junit.Before;
 import org.mockito.Mock;
@@ -14,9 +15,9 @@ import static org.mockito.MockitoAnnotations.initMocks;
 
 //@RunWith(SpringJUnit4ClassRunner.class)
 //@ContextConfiguration(classes = ApplicationConfiguration.class)
-public class AudioBytesControllerTest {
+public class AudioBytesTest {
 
-    private  AudioBytesController audioBytesController;
+    private AudioBytes audioBytes;
 
     @Mock
     private Logger logger;
@@ -48,7 +49,7 @@ public class AudioBytesControllerTest {
 //    @Test
 //    public void testGetEmptyBytesFromAudioInputStream() throws Exception {
 //        when(audioInputStream.read(any(), anyInt(), anyInt())).thenReturn(0);
-//        Future<byte[]> actual = audioBytesController.extract(audioInputStream);
+//        Future<byte[]> actual = audioBytesController.parse(audioInputStream);
 //        assertTrue(actual.get().length == 10);
 //    }
 //

@@ -1,10 +1,11 @@
-package com.mbragg.playlister.builders;
+package com.mbragg.playlister.controllers.audioControllers;
 
 import com.mbragg.playlister.controllers.extractionControllers.FeatureExtractionController;
 import com.mbragg.playlister.controllers.extractionControllers.MetaExtractionController;
 import com.mbragg.playlister.dao.DAO;
-import com.mbragg.playlister.entitys.Track;
+import com.mbragg.playlister.models.entitys.Track;
 import com.mbragg.playlister.factories.TrackFactory;
+import com.mbragg.playlister.controllers.extractionControllers.GenreExtractionController;
 import com.mbragg.playlister.tools.strings.StringTools;
 import org.apache.commons.math3.distribution.MultivariateNormalDistribution;
 import org.apache.commons.math3.linear.RealMatrix;
@@ -31,10 +32,9 @@ import java.util.Map;
  * @author Michael Bragg
  */
 @Component
-public class TrackBuilder {
+public class AudioTrackController {
 
     private final DAO dao;
-    private final GenreBuilder genreBuilder;
     private MetaExtractionController metaExtractionController;
     private FeatureExtractionController featureExtractionController;
 
@@ -46,16 +46,15 @@ public class TrackBuilder {
     private Map<String, List<String>> allGenres;
 
     @Autowired
-    public TrackBuilder(DAO dao, MetaExtractionController metaExtractionController, FeatureExtractionController featureExtractionController, GenreBuilder genreBuilder) {
+    public AudioTrackController(DAO dao, MetaExtractionController metaExtractionController, FeatureExtractionController featureExtractionController, GenreExtractionController genreExtractionController) {
         this.dao = dao;
-        this.genreBuilder = genreBuilder;
         this.metaExtractionController = metaExtractionController;
         this.featureExtractionController = featureExtractionController;
-        allGenres = genreBuilder.build(genresJSONFilename);
+        allGenres = genreExtractionController.build(genresJSONFilename);
     }
 
     /**
-     * Build method. From the supplied audio file parameters, a model and track object are build, and saved with the DAO.
+     * Build method. From the supplied audio file parameters, a model and track object are parse, and saved with the DAO.
      *
      * @param file        File. The audio file.
      * @param audioBytes  byte[]. Array of bytes representing the audio.
@@ -129,7 +128,7 @@ public class TrackBuilder {
     /**
      * For the supplied Track, builds and sets the Multivariate Normal Distribution model.
      *
-     * @param track       Track. The track to build the model for.
+     * @param track       Track. The track to parse the model for.
      * @param audioBytes  byte[]. Array of bytes representing the audio.
      * @param audioFormat AudioFormat. The extracted and formatted audio file format information.
      * @return Track. A reference to the track object.
@@ -180,7 +179,7 @@ public class TrackBuilder {
 //
 //
 //        try {
-//            track.setFeatures(featureExtractionController.extract(file));
+//            track.setFeatures(featureExtractionController.parse(file));
 //        } catch (Exception e) {
 //            e.printStackTrace();
 //        }

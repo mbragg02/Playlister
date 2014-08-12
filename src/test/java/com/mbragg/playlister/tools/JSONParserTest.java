@@ -1,7 +1,7 @@
 package com.mbragg.playlister.tools;
 
-import com.mbragg.playlister.tools.json.GenreJSONParser;
-import com.mbragg.playlister.tools.json.JSONParser;
+import com.mbragg.playlister.tools.file.GenreJSONParser;
+import com.mbragg.playlister.tools.file.JSONParser;
 import org.junit.Before;
 import org.junit.Test;
 

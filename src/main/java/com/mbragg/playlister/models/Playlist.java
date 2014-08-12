@@ -1,8 +1,8 @@
-package com.mbragg.playlister.builders;
+package com.mbragg.playlister.models;
 
 import com.mbragg.playlister.configurations.ApplicationConfiguration;
-import com.mbragg.playlister.entitys.Track;
-import com.mbragg.playlister.tools.externalApplicationLauncher.LaunchExternalApplication;
+import com.mbragg.playlister.models.entitys.Track;
+import com.mbragg.playlister.tools.externalServices.ExternalApplication;
 import org.apache.commons.io.FileUtils;
 import org.apache.log4j.Level;
 import org.apache.log4j.Logger;
@@ -20,13 +20,13 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 /**
- * PlaylistBuilder. Build method to construct a playlist (a list a Track objects).
+ * Playlist. Build method to construct a playlist (a list a Track objects).
  * Includes methods to launch & export the playlist.
  *
  * @author Michael Bragg
  */
 @Component
-public class PlaylistBuilder {
+public class Playlist {
 
     @Value("${playlistFileName}")
     private String playlistFilename;
@@ -118,7 +118,7 @@ public class PlaylistBuilder {
      */
     public void launch() {
         try {
-            if (LaunchExternalApplication.launch(playlistFile)) {
+            if (ExternalApplication.launch(playlistFile)) {
                 logger.log(Level.INFO, "External media player launched.");
             }
         } catch (IOException e) {

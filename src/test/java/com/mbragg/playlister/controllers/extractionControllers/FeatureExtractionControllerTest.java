@@ -1,8 +1,7 @@
 package com.mbragg.playlister.controllers.extractionControllers;
 
-import com.mbragg.playlister.controllers.audioControllers.AudioSampleController;
-import com.mbragg.playlister.controllers.audioControllers.AudioStreamController;
-import com.mbragg.playlister.controllers.extractionControllers.FeatureExtractionController;
+import com.mbragg.playlister.models.Samples;
+import com.mbragg.playlister.models.AudioStream;
 import com.mbragg.playlister.features.Feature;
 import com.mbragg.playlister.features.MultivariateNormalDistributionModel;
 import org.apache.commons.math3.distribution.MultivariateNormalDistribution;
@@ -27,10 +26,10 @@ public class FeatureExtractionControllerTest {
     private FeatureExtractionController featureExtractionController;
 
     @Mock
-    private AudioStreamController audioStreamController;
+    private AudioStream audioStream;
 
     @Mock
-    private AudioSampleController audioSampleController;
+    private Samples samples;
 
     @Mock
     private MultivariateNormalDistributionModel multivariateNormalDistributionModel;
@@ -56,13 +55,13 @@ public class FeatureExtractionControllerTest {
         initMocks(this);
 
         when(audioInputStream.available()).thenReturn(1);
-        when(audioStreamController.getAudioInputStream(any())).thenReturn(audioInputStream);
-        when(audioStreamController.getSampleRate()).thenReturn(44.0f);
+        when(audioStream.getAudioInputStream(any())).thenReturn(audioInputStream);
+        when(audioStream.getSampleRate()).thenReturn(44.0f);
 
         double[] testDoubleArray = {1.0, 2.0, 3.0};
-        when(audioSampleController.getSamplesInMono(any(), any())).thenReturn(testDoubleArray);
+        when(samples.getSamplesInMono(any(), any())).thenReturn(testDoubleArray);
 
-        featureExtractionController = new FeatureExtractionController(audioStreamController, audioSampleController, multivariateNormalDistributionModel);
+        featureExtractionController = new FeatureExtractionController(audioStream, samples, multivariateNormalDistributionModel);
     }
 
 //    @Test
@@ -90,7 +89,7 @@ public class FeatureExtractionControllerTest {
         byte[] audioBytes = {1, 2, 3, 4};
         double[] actual = featureExtractionController.getSamples(audioBytes, audioFormat);
 
-        verify(audioSampleController, times(1)).getSamplesInMono(audioBytes, audioFormat);
+        verify(samples, times(1)).getSamplesInMono(audioBytes, audioFormat);
         assertEquals(1.0, actual[0], DELTA);
         assertEquals(2.0, actual[1], DELTA);
         assertEquals(3.0, actual[2], DELTA);

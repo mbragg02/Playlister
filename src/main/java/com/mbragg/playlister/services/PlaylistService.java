@@ -1,7 +1,7 @@
 package com.mbragg.playlister.services;
 
 import com.mbragg.playlister.controllers.ApplicationController;
-import com.mbragg.playlister.entitys.Track;
+import com.mbragg.playlister.models.entitys.Track;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.concurrent.Service;

@@ -1,6 +1,6 @@
 package com.mbragg.playlister.repositories;
 
-import com.mbragg.playlister.entitys.Genre;
+import com.mbragg.playlister.models.entitys.Genre;
 import org.springframework.data.neo4j.repository.GraphRepository;
 
 /**

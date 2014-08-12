@@ -1,6 +1,6 @@
 package com.mbragg.playlister.factories;
 
-import com.mbragg.playlister.entitys.Track;
+import com.mbragg.playlister.models.entitys.Track;
 
 /**
  * Factory to create Track objects

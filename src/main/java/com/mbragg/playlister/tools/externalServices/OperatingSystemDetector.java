@@ -1,4 +1,4 @@
-package com.mbragg.playlister.tools.externalApplicationLauncher;
+package com.mbragg.playlister.tools.externalServices;
 
 /**
  * Provides static methods to check what is the underlying current operating system.

@@ -1,4 +1,4 @@
-package com.mbragg.playlister.builders;
+package com.mbragg.playlister.tools.file;
 
 import org.apache.commons.io.filefilter.HiddenFileFilter;
 import org.apache.commons.io.filefilter.SuffixFileFilter;
@@ -20,7 +20,7 @@ import java.util.stream.Collectors;
  * @author Michael Bragg
  */
 @Component
-public class DirectoryBuilder {
+public class DirectoryParser {
 
     @Autowired
     Logger logger;
@@ -34,7 +34,7 @@ public class DirectoryBuilder {
      * @param suffix                 String. The file extension to filter by.
      * @return List of Files in the given directory with the matching suffix
      */
-    public List<File> build(String musicDirectoryFilePath, String suffix) {
+    public List<File> parse(String musicDirectoryFilePath, String suffix) {
 
         List<File> files = null;
         SuffixFileFilter suffixFileFilter = new SuffixFileFilter(suffix);

@@ -1,4 +1,4 @@
-package com.mbragg.playlister.entitys;
+package com.mbragg.playlister.models.entitys;
 
 import org.springframework.data.neo4j.annotation.GraphId;
 import org.springframework.data.neo4j.annotation.Indexed;

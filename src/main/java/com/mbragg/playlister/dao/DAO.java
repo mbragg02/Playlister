@@ -1,7 +1,7 @@
 package com.mbragg.playlister.dao;
 
-import com.mbragg.playlister.entitys.Genre;
-import com.mbragg.playlister.entitys.Track;
+import com.mbragg.playlister.models.entitys.Genre;
+import com.mbragg.playlister.models.entitys.Track;
 
 import java.util.List;
 

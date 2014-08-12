@@ -1,7 +1,7 @@
 package com.mbragg.playlister.repositories;
 
-import com.mbragg.playlister.entitys.Genre;
-import com.mbragg.playlister.entitys.Track;
+import com.mbragg.playlister.models.entitys.Genre;
+import com.mbragg.playlister.models.entitys.Track;
 import org.springframework.data.neo4j.annotation.Query;
 import org.springframework.data.neo4j.conversion.Result;
 import org.springframework.data.neo4j.repository.GraphRepository;

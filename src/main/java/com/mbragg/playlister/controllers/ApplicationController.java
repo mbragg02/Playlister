@@ -1,6 +1,6 @@
 package com.mbragg.playlister.controllers;
 
-import com.mbragg.playlister.entitys.Track;
+import com.mbragg.playlister.models.entitys.Track;
 import org.springframework.scheduling.annotation.Async;
 
 import javax.sound.sampled.AudioFormat;

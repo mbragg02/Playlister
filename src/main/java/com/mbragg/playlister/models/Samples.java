@@ -1,4 +1,4 @@
-package com.mbragg.playlister.controllers.audioControllers;
+package com.mbragg.playlister.models;
 
 import org.springframework.stereotype.Component;
 
@@ -15,7 +15,7 @@ import java.nio.ShortBuffer;
  */
 @SuppressWarnings("SpellCheckingInspection")
 @Component
-public class AudioSampleController {
+public class Samples {
 
     private static final int SIXTEEN_BIT = 16;
     private static final int EIGHT_BIT = 8;
@@ -147,7 +147,7 @@ public class AudioSampleController {
 
 //    public double[][] getSamplesInStereo(AudioInputStream audioInputStream) throws Exception {
 //
-//        byte[] audioBytes = extract(audioInputStream);
+//        byte[] audioBytes = parse(audioInputStream);
 //        AudioFormat format = audioInputStream.getFormat();
 //
 //        return getSamplesInStereo(audioBytes, format);
@@ -161,7 +161,7 @@ public class AudioSampleController {
 //    }
 //
 //
-//    private byte[] extract(AudioInputStream audioInputStream) throws IOException {
+//    private byte[] parse(AudioInputStream audioInputStream) throws IOException {
 //
 //        // Calculate the buffer size to use
 //

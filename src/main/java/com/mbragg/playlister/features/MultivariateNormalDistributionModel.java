@@ -21,7 +21,7 @@ public class MultivariateNormalDistributionModel {
     private static final double HALF_AS_DOUBLE = 0.5;
 
     /**
-     * Method to build the model
+     * Method to parse the model
      *
      * @param data List<double[]>. feature vectors for each window.
      * @return Multivariate Normal Distribution Model

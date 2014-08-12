@@ -1,8 +1,8 @@
-package com.mbragg.playlister.builders;
+package com.mbragg.playlister.controllers.extractionControllers;
 
 import com.mbragg.playlister.dao.DAO;
-import com.mbragg.playlister.entitys.Genre;
-import com.mbragg.playlister.tools.json.JSONParser;
+import com.mbragg.playlister.models.entitys.Genre;
+import com.mbragg.playlister.tools.file.JSONParser;
 import com.mbragg.playlister.tools.strings.StringTools;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
@@ -16,13 +16,13 @@ import java.util.Map;
  * @author Michael Bragg
  */
 @Component
-public class GenreBuilder {
+public class GenreExtractionController {
 
     private final JSONParser genreJSONParser;
     private final DAO dao;
 
     @Autowired
-    public GenreBuilder(DAO dao, JSONParser genreJSONParser) {
+    public GenreExtractionController(DAO dao, JSONParser genreJSONParser) {
         this.dao = dao;
         this.genreJSONParser = genreJSONParser;
     }

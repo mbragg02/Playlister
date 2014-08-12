@@ -1,4 +1,4 @@
-package com.mbragg.playlister.entitys;
+package com.mbragg.playlister.models.entitys;
 
 import com.mbragg.playlister.relationships.SimilarTo;
 import org.neo4j.graphdb.Direction;

@@ -1,9 +1,11 @@
 package com.mbragg.playlister.controllers;
 
-import com.mbragg.playlister.builders.*;
 import com.mbragg.playlister.controllers.audioControllers.AudioBatchController;
+import com.mbragg.playlister.controllers.audioControllers.AudioTrackController;
 import com.mbragg.playlister.dao.DAO;
-import com.mbragg.playlister.entitys.Track;
+import com.mbragg.playlister.models.entitys.Track;
+import com.mbragg.playlister.tools.file.DirectoryParser;
+import com.mbragg.playlister.models.Playlist;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.scheduling.annotation.Async;
@@ -24,11 +26,11 @@ import java.util.concurrent.Future;
  * @author Michael Bragg
  */
 @Component
-public class ApplicationControllerImpl implements ApplicationController {
+public class PlaylistGeneratorApplicationController implements ApplicationController {
 
-    private final TrackBuilder trackBuilder;
-    private final PlaylistBuilder playlistBuilder;
-    private final DirectoryBuilder directoryBuilder;
+    private final AudioTrackController audioTrackController;
+    private final Playlist playlist;
+    private final DirectoryParser directoryParser;
     private final DAO dao;
     private final AudioBatchController audioBatchController;
 
@@ -36,10 +38,10 @@ public class ApplicationControllerImpl implements ApplicationController {
     private String suffix;
 
     @Autowired
-    public ApplicationControllerImpl(TrackBuilder trackBuilder, PlaylistBuilder playlistBuilder, DirectoryBuilder directoryBuilder, AudioBatchController audioBatchController, DAO dao) {
-        this.trackBuilder = trackBuilder;
-        this.playlistBuilder = playlistBuilder;
-        this.directoryBuilder = directoryBuilder;
+    public PlaylistGeneratorApplicationController(AudioTrackController audioTrackController, Playlist playlist, DirectoryParser directoryParser, AudioBatchController audioBatchController, DAO dao) {
+        this.audioTrackController = audioTrackController;
+        this.playlist = playlist;
+        this.directoryParser = directoryParser;
         this.audioBatchController = audioBatchController;
         this.dao = dao;
     }
@@ -52,14 +54,14 @@ public class ApplicationControllerImpl implements ApplicationController {
     @Override
     public List<Track> query(String fileName, int sizeOfResult, boolean restrictByGenre) throws InterruptedException, ExecutionException {
         if (dao.trackExists(fileName)) {
-            return playlistBuilder.build(dao.query(fileName, sizeOfResult, restrictByGenre));
+            return playlist.build(dao.query(fileName, sizeOfResult, restrictByGenre));
         }
         return new ArrayList<>();
     }
 
     @Override
     public void launchPlaylist() {
-        playlistBuilder.launch();
+        playlist.launch();
     }
 
 
@@ -72,7 +74,7 @@ public class ApplicationControllerImpl implements ApplicationController {
 
     @Override
     public List<File> directoryBatchBuild(String musicDirectoryFilePath) {
-        return audioBatchController.getFilesToProcess(directoryBuilder.build(musicDirectoryFilePath, suffix));
+        return audioBatchController.getFilesToProcess(directoryParser.parse(musicDirectoryFilePath, suffix));
     }
 
     @Override
@@ -83,7 +85,7 @@ public class ApplicationControllerImpl implements ApplicationController {
     @Override
     @Async
     public Future<Track> buildTrack(File file, byte[] bytes, AudioFormat format) {
-        return new AsyncResult<>(trackBuilder.build(file, bytes, format));
+        return new AsyncResult<>(audioTrackController.build(file, bytes, format));
     }
 
     @Override
@@ -94,7 +96,7 @@ public class ApplicationControllerImpl implements ApplicationController {
 
     @Override
     public void exportPlaylist(File file) {
-        playlistBuilder.export(file);
+        playlist.export(file);
     }
 
 }

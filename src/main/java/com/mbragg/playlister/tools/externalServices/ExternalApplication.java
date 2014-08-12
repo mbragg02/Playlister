@@ -1,4 +1,4 @@
-package com.mbragg.playlister.tools.externalApplicationLauncher;
+package com.mbragg.playlister.tools.externalServices;
 
 import java.awt.*;
 import java.io.File;
@@ -9,7 +9,7 @@ import java.io.IOException;
  *
  * @author Michael Bragg
  */
-public class LaunchExternalApplication {
+public class ExternalApplication {
 
     /**
      * Launch method. Open a given file by an external application. Default application for given file type.
