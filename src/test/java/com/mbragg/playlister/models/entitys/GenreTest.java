@@ -1,11 +1,13 @@
 package com.mbragg.playlister.models.entitys;
 
-import com.mbragg.playlister.models.entitys.Genre;
 import org.junit.Test;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNull;
 
+/**
+ * @author Michael Bragg
+ */
 public class GenreTest {
 
     @Test

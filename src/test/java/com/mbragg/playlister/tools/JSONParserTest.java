@@ -10,6 +10,9 @@ import java.util.Map;
 
 import static org.junit.Assert.assertNotNull;
 
+/**
+ * @author Michael Bragg
+ */
 public class JSONParserTest {
 
     private JSONParser genreJSONParser;

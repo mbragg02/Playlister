@@ -13,6 +13,9 @@ import java.util.List;
 
 import static org.junit.Assert.assertEquals;
 
+/**
+ * @author Michael Bragg
+ */
 public class MultivariateNormalDistributionModelTest {
 
     private static final double DELTA = 1e-15;
@@ -45,6 +48,7 @@ public class MultivariateNormalDistributionModelTest {
         assertEquals(2.5, actualCoMatrix.getEntry(1, 0), DELTA);
         assertEquals(1.0, actualCoMatrix.getEntry(1, 1), DELTA);
     }
+
     @Test
     public void testTwoIdenticalModelsShouldHaveAKullbackLeiblerDivergenceOfZero() {
         double[] actualVector1A = {4, 7};

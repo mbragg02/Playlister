@@ -11,6 +11,9 @@ import static junit.framework.Assert.assertNotNull;
 import static junit.framework.Assert.assertSame;
 import static junit.framework.TestCase.assertTrue;
 
+/**
+ * @author Michael Bragg
+ */
 public class TrackMetaFactoryTest {
 
     @Test

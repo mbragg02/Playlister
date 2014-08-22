@@ -19,6 +19,9 @@ import static org.junit.Assert.assertEquals;
 import static org.mockito.Mockito.*;
 import static org.mockito.MockitoAnnotations.initMocks;
 
+/**
+ * @author Michael Bragg
+ */
 public class FeatureExtractionControllerTest {
 
     private static final double DELTA = 1e-15;
@@ -76,7 +79,7 @@ public class FeatureExtractionControllerTest {
         when(multivariateNormalDistributionModel.build(any())).thenReturn(multivariateNormalDistribution);
         when(multivariateNormalDistribution.toString()).thenReturn("test model");
 
-        byte[] bytes = {1,2,3,4};
+        byte[] bytes = {1, 2, 3, 4};
         MultivariateNormalDistribution actual = featureExtractionController.extract(bytes, audioFormat);
 
         assertEquals("test model", actual.toString());

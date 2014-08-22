@@ -7,9 +7,11 @@ import org.mockito.MockitoAnnotations;
 
 import static org.junit.Assert.assertEquals;
 
+/**
+ * @author Michael Bragg
+ */
 public class TrackTest {
 
-    private static final double DELTA = 1e-15;
     private Track track;
 
     @Mock

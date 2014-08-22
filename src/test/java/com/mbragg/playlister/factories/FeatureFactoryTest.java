@@ -7,6 +7,9 @@ import java.util.List;
 
 import static junit.framework.TestCase.*;
 
+/**
+ * @author Michael Bragg
+ */
 public class FeatureFactoryTest {
 
     @Test

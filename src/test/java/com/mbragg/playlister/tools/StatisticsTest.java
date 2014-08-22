@@ -4,7 +4,9 @@ import com.mbragg.playlister.tools.numbers.Statistics;
 import org.junit.Test;
 import static org.junit.Assert.assertEquals;
 
-
+/**
+ * @author Michael Bragg
+ */
 public class StatisticsTest {
 
     private static final double DELTA = 1e-15;

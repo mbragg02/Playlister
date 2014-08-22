@@ -14,6 +14,9 @@ import java.util.Map;
 import static org.mockito.Mockito.*;
 import static org.mockito.MockitoAnnotations.initMocks;
 
+/**
+ * @author Michael Bragg
+ */
 public class GenreExtractionControllerTest {
 
     @Mock

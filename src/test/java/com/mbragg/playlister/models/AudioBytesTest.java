@@ -19,7 +19,9 @@ import static org.mockito.Matchers.anyInt;
 import static org.mockito.Mockito.when;
 import static org.mockito.MockitoAnnotations.initMocks;
 
-
+/**
+ * @author Michael Bragg
+ */
 public class AudioBytesTest {
 
     private AudioBytes audioBytes;
@@ -57,15 +59,16 @@ public class AudioBytesTest {
     public void testReadIntoByteArrayOutputStream() throws IOException {
         when(audioInputStream.read(any(), anyInt(), anyInt())).thenReturn(3).thenReturn(3).thenReturn(0);
 
-        byte[] buffer = {1,2,3};
+        byte[] buffer = {1, 2, 3};
         ByteArrayOutputStream byteArrayOutputStream = new ByteArrayOutputStream();
 
-        ByteArrayOutputStream actual = audioBytes.readIntoByteArrayOutputStream(audioInputStream, buffer, byteArrayOutputStream );
+        ByteArrayOutputStream actual = audioBytes.readIntoByteArrayOutputStream(audioInputStream, buffer, byteArrayOutputStream);
 
         assertEquals(buffer[0], actual.toByteArray()[0]);
         assertEquals(buffer[1], actual.toByteArray()[1]);
         assertEquals(buffer[2], actual.toByteArray()[2]);
     }
+
     @Test
     public void testGetNumberBytesNeeded() {
         int actual = audioBytes.getNumberBytesNeeded(2.0, audioFormat);

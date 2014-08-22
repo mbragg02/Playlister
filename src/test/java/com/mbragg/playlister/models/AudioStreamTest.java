@@ -1,6 +1,5 @@
 package com.mbragg.playlister.models;
 
-import com.mbragg.playlister.models.AudioStream;
 import org.junit.Before;
 import org.junit.Test;
 
@@ -10,6 +9,9 @@ import java.net.URL;
 
 import static org.junit.Assert.assertEquals;
 
+/**
+ * @author Michael Bragg
+ */
 public class AudioStreamTest {
 
     private static final float DELTA = 1e-15f;
@@ -76,7 +78,7 @@ public class AudioStreamTest {
     }
 
     @Test
-    public void testGetSampleRate() throws Exception{
+    public void testGetSampleRate() throws Exception {
         audioStream.getAudioInputStream(file);
 
         assertEquals(audioStream.getSampleRate(), 44100.0f, DELTA);

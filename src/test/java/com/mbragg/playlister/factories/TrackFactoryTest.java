@@ -7,6 +7,9 @@ import static junit.framework.Assert.assertNotSame;
 import static junit.framework.Assert.assertSame;
 import static junit.framework.TestCase.assertTrue;
 
+/**
+ * @author Michael Bragg
+ */
 public class TrackFactoryTest {
 
     @Test

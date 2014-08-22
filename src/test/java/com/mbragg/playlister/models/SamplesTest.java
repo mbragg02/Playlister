@@ -1,6 +1,5 @@
 package com.mbragg.playlister.models;
 
-import com.mbragg.playlister.models.Samples;
 import org.junit.Before;
 import org.junit.Test;
 import org.mockito.Mock;
@@ -11,6 +10,9 @@ import static org.junit.Assert.assertEquals;
 import static org.mockito.Mockito.when;
 import static org.mockito.MockitoAnnotations.initMocks;
 
+/**
+ * @author Michael Bragg
+ */
 public class SamplesTest {
     private static final double DELTA = 1e-15;
 

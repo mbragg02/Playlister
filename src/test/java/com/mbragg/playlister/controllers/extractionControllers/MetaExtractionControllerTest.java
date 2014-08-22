@@ -10,6 +10,9 @@ import java.util.Map;
 
 import static org.junit.Assert.assertEquals;
 
+/**
+ * @author Michael Bragg
+ */
 public class MetaExtractionControllerTest {
 
     private File file;
@@ -33,9 +36,10 @@ public class MetaExtractionControllerTest {
         metaExtractionController = new MetaExtractionController();
 
     }
+
     @Test
     public void testParse() throws Exception {
-        Map<String, String> meta =  metaExtractionController.extract(file);
+        Map<String, String> meta = metaExtractionController.extract(file);
 
         assertEquals("Test artist", meta.get("ARTIST"));
         assertEquals("2013", meta.get("YEAR"));
@@ -45,7 +49,7 @@ public class MetaExtractionControllerTest {
     }
 
     @Test(expected = FileNotFoundException.class)
-    public void testParseWithNotFoundExceptions() throws Exception{
+    public void testParseWithNotFoundExceptions() throws Exception {
         File unknownFile = new File("notfound.m4a");
         metaExtractionController.extract(unknownFile);
     }
