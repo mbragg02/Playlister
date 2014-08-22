@@ -15,7 +15,7 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 /**
- * FileBuilder. Single Build method to scan a directory to return a list of files.
+ * Directory Parser. Single Build method to scan a directory to return a list of files.
  *
  * @author Michael Bragg
  */
@@ -26,9 +26,9 @@ public class DirectoryParser {
     Logger logger;
 
     /**
-     * Traverses a supplied file directory to batchAudioByteExtraction/return a list of files.
-     * Files must have to same extension as the supplied String suffix.
-     * Hidden files are also ignored.
+     * Traverses a supplied file directory to return a list of files.
+     * - Files must have to same extension as the supplied String suffix.
+     * - Hidden files are ignored.
      *
      * @param musicDirectoryFilePath String. The directory to scan
      * @param suffix                 String. The file extension to filter by.
