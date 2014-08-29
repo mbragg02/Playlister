@@ -7,7 +7,7 @@ import com.mbragg.playlister.models.entitys.Track;
  *
  * @author Michael Bragg
  */
-public class TrackFactory {
+public final class TrackFactory {
 
     private static TrackFactory instance;
 

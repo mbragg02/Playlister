@@ -30,7 +30,7 @@ import java.util.List;
 public class GraphDAO implements DAO {
 
     @Autowired
-    MultivariateNormalDistributionModel model;
+    private MultivariateNormalDistributionModel model;
 
     @Value("${dbName}")
     private String dbName;

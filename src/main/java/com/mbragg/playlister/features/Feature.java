@@ -7,5 +7,5 @@ package com.mbragg.playlister.features;
  */
 public abstract class Feature {
 
-    public abstract double[] extractFeature(double[] samples, double sampling_rate);
+    public abstract double[] extractFeature(double[] samples, double samplingRate);
 }

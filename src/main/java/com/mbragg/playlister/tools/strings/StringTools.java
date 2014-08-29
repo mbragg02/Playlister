@@ -7,11 +7,15 @@ import org.apache.commons.lang3.StringUtils;
  *
  * @author Michael Bragg
  */
-public class StringTools {
+public final class StringTools {
 
     private static final int EDIT_DISTANCE_THRESHOLD = 1;
     private static final int INVALID_EDIT_DISTANCE = -1;
     private static final String I_TUNES_MEDIA_MUSIC = "/Music/iTunes/iTunes Media/Music";
+
+    private StringTools() {
+        // Hide utility class
+    }
 
     /**
      * Levenshtein distance between two strings.

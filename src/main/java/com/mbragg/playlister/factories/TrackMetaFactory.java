@@ -10,7 +10,7 @@ import java.util.List;
  *
  * @author Michael Bragg
  */
-public class TrackMetaFactory {
+public final class TrackMetaFactory {
 
     private static TrackMetaFactory instance;
     private static List<FieldKey> fieldKeys;

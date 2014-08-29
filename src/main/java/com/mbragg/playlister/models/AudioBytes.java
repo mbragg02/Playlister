@@ -21,6 +21,8 @@ import java.util.concurrent.Future;
 @Component
 public class AudioBytes {
 
+    public static final float BUFFER_DURATION = 0.25F;
+    public static final int BUFFER_OVERLAP = 2;
     private Logger logger;
 
     @Autowired
@@ -40,12 +42,9 @@ public class AudioBytes {
         logger.log(Level.INFO, "Job #" + Thread.currentThread().getId() + " started... ");
 
         // Calculate the buffer size to use
-        float bufferDuration = 0.25F;
-        int bufferOverlap = 2;
-        int bufferSize = getNumberBytesNeeded(bufferDuration, audioInputStream.getFormat());
+        int bufferSize = getNumberBytesNeeded(BUFFER_DURATION, audioInputStream.getFormat());
 
-
-        byte[] byteBuffer = new byte[bufferSize + bufferOverlap];
+        byte[] byteBuffer = new byte[bufferSize + BUFFER_OVERLAP];
         ByteArrayOutputStream byteArrayOutputStream = new ByteArrayOutputStream();
 
         byte[] byteArray = readIntoByteArrayOutputStream(audioInputStream, byteBuffer, byteArrayOutputStream).toByteArray();

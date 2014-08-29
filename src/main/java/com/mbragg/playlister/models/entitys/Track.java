@@ -19,7 +19,7 @@ import java.util.Set;
 @NodeEntity
 public class Track {
 
-    public DynamicProperties modelProps = new DynamicPropertiesContainer();
+    private DynamicProperties modelProps = new DynamicPropertiesContainer();
     // Neo4j identifier
     @SuppressWarnings("UnusedDeclaration")
     @GraphId

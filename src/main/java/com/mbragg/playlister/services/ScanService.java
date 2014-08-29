@@ -25,6 +25,7 @@ import java.util.concurrent.Future;
 public class ScanService extends Service {
 
     public static final int INITIAL = 0;
+    public static final int THREAD_SLEEP_MS = 10;
 
     @Autowired
     private ApplicationController applicationController;
@@ -33,7 +34,7 @@ public class ScanService extends Service {
     private Logger logger;
 
     private List<File> listOfFiles;
-    public int numberOfConcurrentThreads = 5;
+    private int numberOfConcurrentThreads;
 
     public ScanService() {
         // empty constructor
@@ -151,7 +152,7 @@ public class ScanService extends Service {
 
                     Future<Track> track = applicationController.buildTrack(file, entry.getKey().get(), entry.getValue());
                     while (!track.isDone()) {
-                        Thread.sleep(10);
+                        Thread.sleep(THREAD_SLEEP_MS);
                     }
                 }
 

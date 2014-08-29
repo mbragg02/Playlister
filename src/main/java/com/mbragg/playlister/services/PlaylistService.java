@@ -25,8 +25,7 @@ public class PlaylistService extends Service<ObservableList<Track>> {
     @Autowired
     private ApplicationController applicationController;
     private String queryFileName;
-    // Default playlist size, (in case the sizeOfResult is not set)
-    private int sizeOfResult = 5;
+    private int sizeOfResult;
     private boolean restrictByGenre;
 
     public void initializePlaylistService(String queryFileName, int sizeOfResult, boolean restrictByGenre) {
@@ -43,7 +42,6 @@ public class PlaylistService extends Service<ObservableList<Track>> {
     @Override
     protected Task<ObservableList<Track>> createTask() {
         return new Task<ObservableList<Track>>() {
-
             /**
              * Called when the task is created
              * @return ObservableList<Track>. The playlist results.

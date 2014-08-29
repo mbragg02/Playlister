@@ -70,7 +70,7 @@ public class Samples {
      * @throws IllegalArgumentException If the audio format is not supported.
      *                                  Only 8 or 16 bit signed PCM samples with a big endian, with an even number of bytes for the given bit depth.
      */
-    public double[][] getSamplesInStereo(byte[] audioBytes, AudioFormat format) throws IllegalArgumentException {
+    public double[][] getSamplesInStereo(byte[] audioBytes, AudioFormat format) {
 
         int numberOfChannels = format.getChannels();
         int bitDepth = format.getSampleSizeInBits();

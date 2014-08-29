@@ -9,7 +9,11 @@ import java.io.IOException;
  *
  * @author Michael Bragg
  */
-public class ExternalApplication {
+public final class ExternalApplication {
+
+    private ExternalApplication() {
+        // hidden
+    }
 
     /**
      * Launch method. Open a given file by an external application. Default application for given file type.

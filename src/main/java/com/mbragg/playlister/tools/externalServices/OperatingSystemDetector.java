@@ -5,11 +5,15 @@ package com.mbragg.playlister.tools.externalServices;
  *
  * @author Michael Bragg
  */
-public class OperatingSystemDetector {
+public final class OperatingSystemDetector {
 
     private static boolean isWindows = false;
     private static boolean isLinux = false;
     private static boolean isMac = false;
+
+    private OperatingSystemDetector() {
+        // hidden utility class
+    }
 
     static {
         String operatingSystem = System.getProperty("os.name").toLowerCase();

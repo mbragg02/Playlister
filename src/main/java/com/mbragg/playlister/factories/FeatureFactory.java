@@ -13,7 +13,7 @@ import java.util.List;
  *
  * @author Michael Bragg
  */
-public class FeatureFactory {
+public final class FeatureFactory {
 
     private static FeatureFactory instance;
 
