@@ -5,7 +5,7 @@ Playlister
 
 Music playlist generation system using content based music information retrieval techniques.
 
-![alt tag](https://drive.google.com/file/d/0B6rvHLyG1OkQREVpMnFtZ0JpZnc/edit?usp=sharing)
+![alt tag](https://docs.google.com/file/d/0B6rvHLyG1OkQREVpMnFtZ0JpZnc/preview)
 
 
 
