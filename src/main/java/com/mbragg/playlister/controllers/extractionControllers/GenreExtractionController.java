@@ -11,7 +11,7 @@ import java.util.List;
 import java.util.Map;
 
 /**
- * GenreBuilder. Single public Build method that returns a Map of genres/sub genres.
+ * Genre extraction controller. Single public Build method that returns a Map of genres/sub genres.
  *
  * @author Michael Bragg
  */

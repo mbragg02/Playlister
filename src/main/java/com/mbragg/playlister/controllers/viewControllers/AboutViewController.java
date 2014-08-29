@@ -10,7 +10,7 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
 
 /**
- * AboutController
+ * About view Controller
  * <p>
  * Logic for initiating and configuring the "About" popup window.
  *

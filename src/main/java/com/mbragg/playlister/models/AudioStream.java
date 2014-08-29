@@ -10,7 +10,7 @@ import java.io.File;
 import java.io.IOException;
 
 /**
- * Audio Stream Controller.
+ * Audio Stream.
  * <p>
  * Class for extracting and formatting a AudioInputStream from a File.
  *

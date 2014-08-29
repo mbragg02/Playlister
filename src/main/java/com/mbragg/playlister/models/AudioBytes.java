@@ -14,7 +14,7 @@ import java.io.IOException;
 import java.util.concurrent.Future;
 
 /**
- * Audio Bytes Controller.
+ * Audio Bytes.
  * <p>
  * Class that extracts audio data as a byte[] from an AudioInputStream.
  */

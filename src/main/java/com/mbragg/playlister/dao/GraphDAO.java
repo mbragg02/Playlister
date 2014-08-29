@@ -20,7 +20,7 @@ import java.util.Iterator;
 import java.util.List;
 
 /**
- * Implementation of the DAO interface.
+ * Neo4j graph Implementation of the DAO interface.
  * <p>
  * Class for communicating with the database.
  *

@@ -27,7 +27,7 @@ import java.util.Map;
 
 
 /**
- * TrackBuilder class. Methods for building Track objects.
+ * Audio Track Controller class. Methods for coordinating the construction of Track objects.
  *
  * @author Michael Bragg
  */

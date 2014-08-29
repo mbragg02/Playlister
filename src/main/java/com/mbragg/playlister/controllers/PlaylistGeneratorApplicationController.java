@@ -20,7 +20,7 @@ import java.util.Map;
 import java.util.concurrent.Future;
 
 /**
- * Application single entry point.
+ * Application controller implementation - single entry point.
  *
  * @author Michael Bragg
  */

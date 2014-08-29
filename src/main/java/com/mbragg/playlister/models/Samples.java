@@ -7,7 +7,7 @@ import java.nio.ByteBuffer;
 import java.nio.ShortBuffer;
 
 /**
- * Audio Sample controller.
+ * Audio Sample.
  * <p>
  * Class to manage conversion from byte[] to double[], in mono and stereo.
  *
