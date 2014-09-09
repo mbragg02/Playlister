@@ -156,13 +156,10 @@ public class ScanService extends Service {
                     }
                 }
 
-//                for (Future<Track> t : futureTasks) {
-//                    while (!t.isDone()) {
-//                        Thread.sleep(10);
-//                    }
-//                }
-            }
+            } // close createTracksInBatch()
 
-        };
-    }
-}
+        }; // close the new Task()
+
+    } // close createTask()
+
+} // close ScanService()
