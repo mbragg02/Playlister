@@ -25,7 +25,6 @@ import java.io.IOException;
 import java.util.List;
 import java.util.Map;
 
-
 /**
  * Audio Track Controller class. Methods for coordinating the construction of Track objects.
  *
@@ -152,38 +151,4 @@ public class AudioTrackController {
         return track;
     }
 
-
 }
-
-
-// For command line application
-//    public void batchAudioByteExtraction(List<File> files, Map<String, List<String>> allGenres) {
-//
-//        this.allGenres = allGenres;
-//        logger.log(Level.INFO, "Total files in your library: " + files.size());
-//
-//        int fileCounter = 0;
-//
-//        for (File file : files) {
-//            if (!dao.trackExists(file.getName())) {
-//                logger.log(Level.INFO, "[" + ++fileCounter + " of " + files.size() + "] " + file.getName());
-//
-//                batchAudioByteExtraction(file);
-//            }
-//        }
-//    }
-
-// For command line application
-//    public Track batchAudioByteExtraction(File file) {
-//        Track track = addMetaDataToTrack(TrackFactory.getInstance().getTrack(), file);
-//
-//
-//        try {
-//            track.setFeatures(featureExtractionController.parse(file));
-//        } catch (Exception e) {
-//            e.printStackTrace();
-//        }
-//        dao.saveTrack(track);
-//
-//        return track;
-//    }
