@@ -10,7 +10,9 @@ import java.io.IOException;
 import java.io.InputStream;
 
 /**
- * Additional configuration class for GUI components
+ * Spring configuration for the GUI view.
+ * <p>
+ * Configures view controller bean and loads the view.fxml file.
  *
  * @author Michael Bragg
  */

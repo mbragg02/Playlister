@@ -26,7 +26,7 @@ import java.util.List;
 import java.util.Map;
 
 /**
- * Audio Track Controller class. Methods for coordinating the construction of Track objects.
+ * Class for coordinating the construction and saving of full Track objects.
  *
  * @author Michael Bragg
  */

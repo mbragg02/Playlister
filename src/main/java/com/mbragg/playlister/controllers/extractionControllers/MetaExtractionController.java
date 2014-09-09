@@ -19,9 +19,7 @@ import java.util.Map;
 import java.util.logging.Level;
 
 /**
- * Meta Extraction Controller.
- * <p>
- * Class to manage the extraction of embedded metadata information from a audio file.
+ * Class to manage the extraction of embedded metadata information from an audio file.
  *
  * @author Michael Bragg
  */

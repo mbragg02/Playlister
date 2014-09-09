@@ -11,7 +11,9 @@ import org.springframework.data.neo4j.config.Neo4jConfiguration;
 import org.springframework.scheduling.annotation.EnableAsync;
 
 /**
- * Application configuration class (Spring framework and Neo4j)
+ * Spring configuration for the application.
+ * <p>
+ * Configures beans, configuration file dependencies, application logger and the Neo4j Graph database service.
  *
  * @author Michael Bragg
  */

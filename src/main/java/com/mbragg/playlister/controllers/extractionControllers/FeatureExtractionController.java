@@ -16,9 +16,7 @@ import java.util.stream.Collectors;
 import java.util.stream.DoubleStream;
 
 /**
- * Feature Extraction controller.
- * <p>
- * Controls the feature extraction processes and model construction
+ * Controls the feature extraction processes and model construction.
  *
  * @author Michael Bragg
  */

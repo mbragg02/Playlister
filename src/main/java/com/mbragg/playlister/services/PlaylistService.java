@@ -13,8 +13,6 @@ import java.util.List;
 import java.util.concurrent.ExecutionException;
 
 /**
- * Playlist Service.
- * <p>
  * Class that manages the playlist creation service task.
  *
  * @author Michael Bragg

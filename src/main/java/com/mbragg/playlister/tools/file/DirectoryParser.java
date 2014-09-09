@@ -15,7 +15,7 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 /**
- * Directory Parser. Single Build method to scan a directory to return a list of files.
+ * Provides a single Build method to scan a directory to return a list of files.
  *
  * @author Michael Bragg
  */

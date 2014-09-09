@@ -3,7 +3,7 @@ package com.mbragg.playlister.features;
 import org.oc.ocvolume.dsp.featureExtraction;
 
 /**
- * Mel Frequency Cepstral Coefficient (MFCC)
+ * Mel Frequency Cepstral Coefficient (MFCC) feature.
  * <p>
  * MFCC: "a representation of the short-term power spectrum of a sound,
  * based on a linear cosine transform of a log power spectrum on a nonlinear mel scale of frequency."

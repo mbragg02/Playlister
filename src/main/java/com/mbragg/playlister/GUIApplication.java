@@ -10,10 +10,9 @@ import javafx.stage.Stage;
 import org.springframework.context.annotation.AnnotationConfigApplicationContext;
 
 /**
- * GUIApplication - "Playlist Generator V3"
+ * Class for launching the GUI playlist generator application.
  * <p>
- * Main class for launching the application
- * <p>
+ * Configures the Spring framework context for the application, initializes and launches the GUI view.
  * Extends JavaFX Application to launch GUI.
  *
  * @author Michael Bragg

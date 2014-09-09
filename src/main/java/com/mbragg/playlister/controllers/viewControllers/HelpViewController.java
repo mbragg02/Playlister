@@ -21,9 +21,7 @@ import java.util.Map;
 import java.util.Properties;
 
 /**
- * Help View controller.
- * <p>
- * Logic for initiating and configuring the "Help" popup window.
+ * Class to control the creation and configuration of the "Help" popup window.
  *
  * @author Michael Bragg
  */

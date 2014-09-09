@@ -20,8 +20,6 @@ import java.util.concurrent.Future;
 import java.util.stream.Collectors;
 
 /**
- * Audio Batch Controller.
- * <p>
  * Class to control the process of extracting audio data byte arrays from files.
  *
  * @author Michael Bragg

@@ -21,8 +21,6 @@ import java.util.List;
 
 /**
  * Neo4j graph Implementation of the DAO interface.
- * <p>
- * Class for communicating with the database.
  *
  * @author Michael Bragg
  */

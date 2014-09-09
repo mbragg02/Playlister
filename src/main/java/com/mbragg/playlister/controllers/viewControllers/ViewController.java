@@ -19,7 +19,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import java.io.File;
 
 /**
- * View controller for JavaFX view.
+ * Manages the communication between the view.fxml view and the application controller.
  *
  * @author Michael Bragg
  */

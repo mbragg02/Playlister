@@ -1,8 +1,7 @@
 package com.mbragg.playlister.features;
 
 /**
- * Abstract feature class.
- * i.e All subclasses must implement the extractFeature method.
+ * Single method abstract feature class that must be implemented by all feature implementations.
  *
  * @author Michael Bragg
  */

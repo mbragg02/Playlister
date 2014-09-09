@@ -11,7 +11,7 @@ import java.util.List;
 import java.util.Map;
 
 /**
- * Genre extraction controller. Single public Build method that returns a Map of genres/sub genres.
+ * Controls the parsing of the Genre JSON file to produce a Map of genres/sub genres.
  *
  * @author Michael Bragg
  */

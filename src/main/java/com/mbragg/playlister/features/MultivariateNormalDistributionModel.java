@@ -9,7 +9,7 @@ import org.springframework.stereotype.Component;
 import java.util.List;
 
 /**
- * Multivariate Normal Distribution Model
+ * Model to represent a complete Track's extracted features.
  *
  * @author Michael Bragg
  */

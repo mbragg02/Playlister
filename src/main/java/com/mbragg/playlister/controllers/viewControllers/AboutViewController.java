@@ -10,9 +10,7 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
 
 /**
- * About view Controller
- * <p>
- * Logic for initiating and configuring the "About" popup window.
+ * Class to control the creation and configuration of the "About" popup window.
  *
  * @author Michael Bragg
  */

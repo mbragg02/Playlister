@@ -10,7 +10,7 @@ import java.util.Map;
 import java.util.concurrent.Future;
 
 /**
- * Application controller interface
+ * Single entry point for the application.
  *
  * @author Michael Bragg
  */
