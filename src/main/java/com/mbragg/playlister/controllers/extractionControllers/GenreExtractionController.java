@@ -20,6 +20,8 @@ public class GenreExtractionController {
 
     private final JSONParser genreJSONParser;
     private final DAO dao;
+    public static final String GENRES_JSON = "genres.json";
+
 
     @Autowired
     public GenreExtractionController(DAO dao, JSONParser genreJSONParser) {
@@ -34,7 +36,7 @@ public class GenreExtractionController {
      */
     public Map<String, List<String>> build() {
 
-        Map<String, List<String>> allGenres = genreJSONParser.parse();
+        Map<String, List<String>> allGenres = genreJSONParser.parse(GENRES_JSON);
         insert(allGenres);
         return allGenres;
     }

@@ -187,12 +187,6 @@ public class FeatureExtractionController {
                     .map(Arrays::stream)
                     .map(DoubleStream::boxed)
                     .forEach(d -> d.forEach(featureValues::add));
-//
-//            for (double[] featureVector : featureVectorList) {
-//                for (double featureVectorValue : featureVector) {
-//                    featureValues.add(featureVectorValue);
-//                }
-//            }
 
             aggregatedFeatureVectorList.add(ArrayUtils.toPrimitive(featureValues.toArray(new Double[featureValues.size()])));
             featureVectorList.clear();
@@ -200,61 +194,5 @@ public class FeatureExtractionController {
         }
         return aggregatedFeatureVectorList;
     }
-
-
-
-
-//    Code from previous prototypes. Not currently used!
-
-
-    // Used by async method
-//    public double[] parse(byte[] audioBytes, AudioFormat audioFormat) throws Exception {
-//        getSamples(audioBytes, audioFormat);
-//        return getAverageVector(getFeatures());
-//    }
-
-//    public double[] parse(File file) throws Exception {
-//        getSamples(file);
-//        double[][][] vals = getFeatures();
-//        return getAverageVector(vals);
-//    }
-
-//    private void getSamples(File file) throws Exception {
-//        AudioInputStream formattedAudioInputStream = audioStreamController.getAudioInputStream(file);
-//        samples = audioSampleController.getSamplesInMono(formattedAudioInputStream);
-//
-//    }
-
-//    private double[] getAverageVector(double[][][] windowFeatureValues) {
-//        // windowFeatureValues [window][feature][values]
-//
-//        double[] result = new double[0];
-//
-//        for (int feat = 0; feat < featuresToExtract.size(); feat++) {
-//
-//            double averages;
-//            int numberOfWindows = windowFeatureValues.length - 1;
-//
-//            result = new double[windowFeatureValues[numberOfWindows][feat].length];
-//
-//            // change val to 1 to avoid low frequency bias
-//            for (int val = 1; val < windowFeatureValues[numberOfWindows][feat].length; val++) {
-//                // Find the values to find the average and standard deviations of
-//                double[] valuesToProcess = new double[windowFeatureValues.length];
-//
-//                int current = 0;
-//                for (double[][] windowFeatureValue : windowFeatureValues) {
-//                    if (windowFeatureValue[feat] != null) {
-//                        valuesToProcess[current] = windowFeatureValue[feat][val];
-//                        current++;
-//                    }
-//                }
-//                averages = Arrays.stream(valuesToProcess).average().getAsDouble();
-//                result[val] = averages;
-//            }
-//        }
-//        return result;
-//    }
-
 
 }
