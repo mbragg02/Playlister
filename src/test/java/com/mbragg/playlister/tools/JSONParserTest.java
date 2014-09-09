@@ -16,6 +16,8 @@ import static org.junit.Assert.assertNotNull;
 public class JSONParserTest {
 
     private JSONParser genreJSONParser;
+    public static final String GENRES_JSON = "genres.json";
+
 
     @Before
     public void setUp() throws Exception {
@@ -24,7 +26,7 @@ public class JSONParserTest {
 
     @Test
     public void testParse() throws Exception {
-        Map<String, List<String>> result = genreJSONParser.parse();
+        Map<String, List<String>> result = genreJSONParser.parse(GENRES_JSON);
 
         for (Map.Entry<String, List<String>> entry : result.entrySet()) {
             List<String> values = entry.getValue();
