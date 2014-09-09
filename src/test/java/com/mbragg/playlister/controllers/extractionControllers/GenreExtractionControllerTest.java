@@ -19,6 +19,8 @@ import static org.mockito.MockitoAnnotations.initMocks;
  */
 public class GenreExtractionControllerTest {
 
+    public static final String GENRES_JSON = "genres.json";
+
     @Mock
     private DAO dao;
 
@@ -34,7 +36,7 @@ public class GenreExtractionControllerTest {
         Map<String, List<String>> testGenres = new HashMap<>();
         testGenres.put("Rock", new ArrayList<>());
 
-        when(jsonParser.parse()).thenReturn(testGenres);
+        when(jsonParser.parse(GENRES_JSON)).thenReturn(testGenres);
 
         genreExtractionController = new GenreExtractionController(dao, jsonParser);
     }

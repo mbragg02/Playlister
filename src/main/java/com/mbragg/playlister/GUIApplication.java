@@ -10,7 +10,7 @@ import javafx.stage.Stage;
 import org.springframework.context.annotation.AnnotationConfigApplicationContext;
 
 /**
- * GUIApplication
+ * GUIApplication - "Playlist Generator V3"
  * <p>
  * Main class for launching the application
  * <p>
@@ -37,10 +37,13 @@ public class GUIApplication extends Application {
     @Override
     public void start(Stage stage) throws Exception {
 
+        // Configure the application's context (Spring framework)
         AnnotationConfigApplicationContext context
                 = new AnnotationConfigApplicationContext(ApplicationConfiguration.class, GUIApplicationConfiguration.class);
 
         ViewController viewController = context.getBean(ViewController.class);
+
+        // Set the JavaFX scene / stage and initialize the view controller
         Scene scene = new Scene((Parent) viewController.getView(), WIDTH, HEIGHT);
         stage.setResizable(false);
         stage.setScene(scene);
