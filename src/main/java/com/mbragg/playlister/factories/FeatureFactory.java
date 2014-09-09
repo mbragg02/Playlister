@@ -9,7 +9,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 /**
- * Factory to parse a list of features which are to be extracted from audio data.
+ * Factory for the list of features which are to be extracted from audio data.
  *
  * @author Michael Bragg
  */
