@@ -8,7 +8,7 @@ import org.oc.ocvolume.dsp.featureExtraction;
  * MFCC: "a representation of the short-term power spectrum of a sound,
  * based on a linear cosine transform of a log power spectrum on a nonlinear mel scale of frequency."
  * <p>
- * Calling methods from OrangeCow: OC Volume - Java speech recognition engine
+ * Note: Calling methods from OrangeCow: OC Volume - Java speech recognition engine. Found in package org.oc.ocvolume.dsp.featureExtraction.
  */
 public class MFCC extends Feature {
 
