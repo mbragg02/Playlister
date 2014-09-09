@@ -1,4 +1,4 @@
-package com.mbragg.playlister.features;
+package com.mbragg.playlister.models;
 
 import org.apache.commons.math3.distribution.MultivariateNormalDistribution;
 import org.apache.commons.math3.linear.*;
@@ -14,7 +14,7 @@ import java.util.List;
  * @author Michael Bragg
  */
 @Component
-public class MultivariateNormalDistributionModel {
+public class MultivariateNormalDistributionModel implements TrackModel {
 
     private static final int SINGLE_COLUMN_DIMENSION = 1;
     private static final int INITIAL_COLUMN_ROW = 0;
@@ -26,9 +26,15 @@ public class MultivariateNormalDistributionModel {
      * @param data List of feature vectors for each window.
      * @return Multivariate Normal Distribution Model
      */
+    @Override
     public MultivariateNormalDistribution build(List<double[]> data) {
         RealMatrix matrix = createRealMatrix(data);
         return getMultivariateNormalDistribution(getMeanVectorOfMatrix(matrix), getCovarianceMatrix(matrix));
+    }
+
+    @Override
+    public double getSimilarity(MultivariateNormalDistribution dx, MultivariateNormalDistribution dy) {
+        return getSymmetricKullbackLeiblerDivergence(dx, dy);
     }
 
     /**
@@ -93,7 +99,7 @@ public class MultivariateNormalDistributionModel {
      * @param dy MultivariateNormalDistribution y
      * @return double. Symmetric Kullback-Leibler divergence.
      */
-    public double getSymmetricKullbackLeiblerDivergence(MultivariateNormalDistribution dx, MultivariateNormalDistribution dy) {
+    protected double getSymmetricKullbackLeiblerDivergence(MultivariateNormalDistribution dx, MultivariateNormalDistribution dy) {
         double dxDy = getKullbackLeiblerDivergence(dx, dy);
         double dyDx = getKullbackLeiblerDivergence(dy, dx);
         return ((HALF_AS_DOUBLE * dxDy) + (HALF_AS_DOUBLE * dyDx));
@@ -106,7 +112,7 @@ public class MultivariateNormalDistributionModel {
      * @param dy MultivariateNormalDistribution y
      * @return double. Kullback-Leibler divergence.
      */
-    public double getKullbackLeiblerDivergence(MultivariateNormalDistribution dx, MultivariateNormalDistribution dy) {
+    protected double getKullbackLeiblerDivergence(MultivariateNormalDistribution dx, MultivariateNormalDistribution dy) {
 
         RealVector meanVectorX = new ArrayRealVector(dx.getMeans());
         RealVector meanVectorY = new ArrayRealVector(dy.getMeans());

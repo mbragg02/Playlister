@@ -1,6 +1,6 @@
 package com.mbragg.playlister.dao;
 
-import com.mbragg.playlister.features.MultivariateNormalDistributionModel;
+import com.mbragg.playlister.models.TrackModel;
 import com.mbragg.playlister.models.entitys.Genre;
 import com.mbragg.playlister.models.entitys.Track;
 import com.mbragg.playlister.repositories.GenreRepository;
@@ -28,7 +28,7 @@ import java.util.List;
 public class GraphDAO implements DAO {
 
     @Autowired
-    private MultivariateNormalDistributionModel model;
+    private TrackModel trackModel;
 
     @Value("${dbName}")
     private String dbName;
@@ -105,7 +105,7 @@ public class GraphDAO implements DAO {
             // Add similarity relationships to all other track nodes
             for (Track nextTrack : trackRepository.findAll()) {
                 if (!nextTrack.equals(track)) {
-                    double similarity = this.model.getSymmetricKullbackLeiblerDivergence(createDistributionFromProperties(track), createDistributionFromProperties(nextTrack));
+                    double similarity = this.trackModel.getSimilarity(createDistributionFromProperties(track), createDistributionFromProperties(nextTrack));
                     track.relateTo(nextTrack, similarity);
                 }
             }
@@ -117,7 +117,7 @@ public class GraphDAO implements DAO {
     }
 
     /*
-     * For a given track returned from the database, reconstruct a distribution model from its properties values.
+     * For a given track returned from the database, reconstruct a distribution trackModel from its properties values.
      */
     private MultivariateNormalDistribution createDistributionFromProperties(Track track) {
 

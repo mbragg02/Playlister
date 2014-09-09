@@ -1,4 +1,4 @@
-package com.mbragg.playlister.features;
+package com.mbragg.playlister.models;
 
 import org.apache.commons.math3.distribution.MultivariateNormalDistribution;
 import org.apache.commons.math3.linear.Array2DRowRealMatrix;

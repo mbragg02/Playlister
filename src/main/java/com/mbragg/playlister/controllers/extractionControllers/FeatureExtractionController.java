@@ -4,7 +4,7 @@ import com.mbragg.playlister.models.Samples;
 import com.mbragg.playlister.models.AudioStream;
 import com.mbragg.playlister.factories.FeatureFactory;
 import com.mbragg.playlister.features.Feature;
-import com.mbragg.playlister.features.MultivariateNormalDistributionModel;
+import com.mbragg.playlister.models.TrackModel;
 import org.apache.commons.lang3.ArrayUtils;
 import org.apache.commons.math3.distribution.MultivariateNormalDistribution;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -29,13 +29,13 @@ public class FeatureExtractionController {
 
     private AudioStream audioStream;
     private Samples samples;
-    private MultivariateNormalDistributionModel multivariateNormalDistributionModel;
+    private TrackModel trackModel;
 
     @Autowired
-    public FeatureExtractionController(AudioStream audioStream, Samples samples, MultivariateNormalDistributionModel multivariateNormalDistributionModel) {
+    public FeatureExtractionController(AudioStream audioStream, Samples samples, TrackModel trackModel) {
         this.audioStream = audioStream;
         this.samples = samples;
-        this.multivariateNormalDistributionModel = multivariateNormalDistributionModel;
+        this.trackModel = trackModel;
         this.windowOverlapOffset = (int) (WINDOW_OVERLAP * (double) WINDOW_SIZE);
     }
 
@@ -54,7 +54,7 @@ public class FeatureExtractionController {
 
         double[][][] results = getFeatures(samples, featuresToExtract);
 
-        return multivariateNormalDistributionModel.build(getFeatureVectorList(results));
+        return trackModel.build(getFeatureVectorList(results));
     }
 
     /**

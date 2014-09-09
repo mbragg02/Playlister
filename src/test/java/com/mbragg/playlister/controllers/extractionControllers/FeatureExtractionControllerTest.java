@@ -3,7 +3,7 @@ package com.mbragg.playlister.controllers.extractionControllers;
 import com.mbragg.playlister.models.Samples;
 import com.mbragg.playlister.models.AudioStream;
 import com.mbragg.playlister.features.Feature;
-import com.mbragg.playlister.features.MultivariateNormalDistributionModel;
+import com.mbragg.playlister.models.TrackModel;
 import org.apache.commons.math3.distribution.MultivariateNormalDistribution;
 import org.junit.Before;
 import org.junit.Test;
@@ -34,7 +34,7 @@ public class FeatureExtractionControllerTest {
     private Samples samples;
 
     @Mock
-    private MultivariateNormalDistributionModel multivariateNormalDistributionModel;
+    private TrackModel trackModel;
 
     @Mock
     private MultivariateNormalDistribution multivariateNormalDistribution;
@@ -63,7 +63,7 @@ public class FeatureExtractionControllerTest {
         double[] testDoubleArray = {1.0, 2.0, 3.0};
         when(samples.getSamplesInMono(any(), any())).thenReturn(testDoubleArray);
 
-        featureExtractionController = new FeatureExtractionController(audioStream, samples, multivariateNormalDistributionModel);
+        featureExtractionController = new FeatureExtractionController(audioStream, samples, trackModel);
     }
 
 //    @Test
@@ -76,14 +76,14 @@ public class FeatureExtractionControllerTest {
 
     @Test
     public void testExtract() throws Exception {
-        when(multivariateNormalDistributionModel.build(any())).thenReturn(multivariateNormalDistribution);
+        when(trackModel.build(any())).thenReturn(multivariateNormalDistribution);
         when(multivariateNormalDistribution.toString()).thenReturn("test model");
 
         byte[] bytes = {1, 2, 3, 4};
         MultivariateNormalDistribution actual = featureExtractionController.extract(bytes, audioFormat);
 
         assertEquals("test model", actual.toString());
-        verify(multivariateNormalDistributionModel).build(any());
+        verify(trackModel).build(any());
     }
 
     @Test
