@@ -7,7 +7,11 @@ import java.util.Arrays;
  *
  * @author Michael Bragg
  */
-public class Statistics {
+public final class Statistics {
+
+    private Statistics() {
+        // Empty private constructor to hide Statistics utility class.
+    }
 
     /**
      * Cosine similarity between two vectors.

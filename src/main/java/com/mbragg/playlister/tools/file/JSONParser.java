@@ -9,5 +9,12 @@ import java.util.Map;
  * @author Michael Bragg
  */
 public interface JSONParser {
-    Map<String, List<String>> parse();
+
+    /**
+     * Parse a specific JSON file
+     *
+     * @param filename String. The name of the JSON file.
+     * @return A Map containing the extracted JSON data.
+     */
+    Map<String, List<String>> parse(String filename);
 }

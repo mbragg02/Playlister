@@ -32,10 +32,10 @@ public class GenreJSONParser implements JSONParser {
     }
 
     @Override
-    public Map<String, List<String>> parse() {
+    public Map<String, List<String>> parse(String filename) {
 
         try {
-            Resource json = new ClassPathResource("genres.json");
+            Resource json = new ClassPathResource(filename);
 
             InputStream jsonInputStream = json.getInputStream();
 
@@ -61,6 +61,5 @@ public class GenreJSONParser implements JSONParser {
         }
         return allGenres;
     }
-
 
 }
