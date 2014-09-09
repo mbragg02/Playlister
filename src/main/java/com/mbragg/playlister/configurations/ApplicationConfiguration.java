@@ -11,8 +11,7 @@ import org.springframework.data.neo4j.config.Neo4jConfiguration;
 import org.springframework.scheduling.annotation.EnableAsync;
 
 /**
- * Master configuration class for Spring framework: Used by both the GUI and Commandline application.
- * Neo4j database service also initialized.
+ * Application configuration class (Spring framework & Neo4j)
  *
  * @author Michael Bragg
  */

@@ -10,7 +10,7 @@ import java.io.IOException;
 import java.io.InputStream;
 
 /**
- * Additional Spring configuration class for GUI based application
+ * Additional configuration class for GUI components
  *
  * @author Michael Bragg
  */
@@ -36,4 +36,5 @@ public class GUIApplicationConfiguration {
             }
         }
     }
+
 }
