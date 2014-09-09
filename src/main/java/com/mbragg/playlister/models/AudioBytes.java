@@ -14,9 +14,9 @@ import java.io.IOException;
 import java.util.concurrent.Future;
 
 /**
- * Audio Bytes.
+ * Audio Bytes class.
  * <p>
- * Class that extracts audio data as a byte[] from an AudioInputStream.
+ * Contains methods that extract audio data as a byte[] from an AudioInputStream.
  */
 @Component
 public class AudioBytes {
@@ -60,8 +60,9 @@ public class AudioBytes {
 
     /**
      * For a given audioInputStream, converts format to ByteArrayOutputStream. By the means of a buffer.
-     * @param audioInputStream AudioInputStream.
-     * @param byteBuffer byte[] buffer for use in conversion.
+     *
+     * @param audioInputStream      AudioInputStream.
+     * @param byteBuffer            byte[] buffer for use in conversion.
      * @param byteArrayOutputStream ByteArrayOutputStream. New byte array output stream for data to be copied to.
      * @return ByteArrayOutputStream. Data from audio input stream.
      */

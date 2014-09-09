@@ -143,9 +143,7 @@ public class Track {
 
     @Override
     public String toString() {
-        return "Track{" +
-                "filename='" + filename + '\'' +
-                '}';
+        return "Track{" + "filename='" + filename + '\'' + '}';
     }
 
     @Override

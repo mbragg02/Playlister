@@ -14,7 +14,10 @@ import java.io.File;
 import java.io.FileOutputStream;
 import java.io.FileWriter;
 import java.io.IOException;
+import java.net.URI;
+import java.net.URISyntaxException;
 import java.net.URL;
+import java.nio.file.Path;
 import java.util.Arrays;
 import java.util.List;
 import java.util.stream.Collectors;
@@ -44,6 +47,7 @@ public class Playlist {
      * @return List<Track>. The list of Tracks are return.
      */
     public List<Track> build(List<Track> results) {
+
         playlistFile = getSourceDirectoryPath();
 
         filePaths = results.stream()
@@ -102,8 +106,17 @@ public class Playlist {
         URL url = ApplicationConfiguration.class.getProtectionDomain().getCodeSource().getLocation();
 
         // Construct the absolute path to the new playlist file.
-        File file = new File(url.getFile()).getParentFile();
-        String path = file.toPath().resolve(playlistFilename).toString();
+        StringBuilder sb = new StringBuilder();
+
+        try {
+            File file = new File(url.toURI().getSchemeSpecificPart()).getParentFile();
+            sb.append(file.getPath()).append(File.separator).append(playlistFilename);
+        } catch (URISyntaxException e) {
+            logger.log(Level.WARN, e.getMessage());
+        }
+
+        logger.log(Level.INFO, sb.toString());
+        String path = sb.toString();
 
         // Remove to file: prefix (If the code is being executed from within a .jar)
         String prefix = "file:";

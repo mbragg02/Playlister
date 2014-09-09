@@ -7,9 +7,9 @@ import java.nio.ByteBuffer;
 import java.nio.ShortBuffer;
 
 /**
- * Audio Sample.
+ * Audio Sample class.
  * <p>
- * Class to manage conversion from byte[] to double[], in mono and stereo.
+ * Methods for conversion from byte[] to double[], in mono and stereo.
  *
  * @author Michael Bragg
  */
@@ -139,55 +139,5 @@ public class Samples {
         maxSampleValue--;
         return ((double) maxSampleValue) - 1.0;
     }
-
-
-
-// Currently unused below this point
-
-
-//    public double[][] getSamplesInStereo(AudioInputStream audioInputStream) throws Exception {
-//
-//        byte[] audioBytes = parse(audioInputStream);
-//        AudioFormat format = audioInputStream.getFormat();
-//
-//        return getSamplesInStereo(audioBytes, format);
-//    }
-//
-//
-//    public double[] getSamplesInMono(AudioInputStream audioInputStream) throws Exception {
-//
-//        double[][] audioSamples = getSamplesInStereo(audioInputStream);
-//        return getSamplesInMono(audioSamples);
-//    }
-//
-//
-//    private byte[] parse(AudioInputStream audioInputStream) throws IOException {
-//
-//        // Calculate the buffer size to use
-//
-//        int bufferSize = getNumberBytesNeeded(audioInputStream.getFormat());
-//        byte[] byteBuffer = new byte[bufferSize + BUFFER_OVERLAP];
-//
-//        // Read the bytes into the byteBuffer and then into the ByteArrayOutputStream
-//        ByteArrayOutputStream byteArrayOutputStream = new ByteArrayOutputStream();
-//
-//        int position = audioInputStream.read(byteBuffer, 0, byteBuffer.length);
-//
-//        while (position > 0) {
-//            position = audioInputStream.read(byteBuffer, 0, byteBuffer.length);
-//            byteArrayOutputStream.write(byteBuffer, 0, position);
-//        }
-//
-//        byte[] byteArray = byteArrayOutputStream.toByteArray();
-//
-//        try {
-//            byteArrayOutputStream.close();
-//        } catch (IOException e) {
-//            e.printStackTrace();
-//        }
-//
-//        return byteArray;
-//    }
-
 
 }
