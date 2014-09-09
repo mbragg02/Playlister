@@ -10,8 +10,6 @@ import java.io.File;
 import java.io.IOException;
 
 /**
- * Audio Stream class.
- * <p>
  * Methods for extracting and formatting a AudioInputStream from a File.
  *
  * @author Michael Bragg

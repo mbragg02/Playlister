@@ -23,8 +23,7 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 /**
- * Playlist. Build method to construct a playlist (a list a Track objects).
- * Includes methods to launch and export the playlist.
+ * Methods to build, launch and export the playlist.
  *
  * @author Michael Bragg
  */

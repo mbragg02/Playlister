@@ -7,8 +7,6 @@ import java.nio.ByteBuffer;
 import java.nio.ShortBuffer;
 
 /**
- * Audio Sample class.
- * <p>
  * Methods for conversion from byte[] to double[], in mono and stereo.
  *
  * @author Michael Bragg
