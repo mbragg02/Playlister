@@ -21,7 +21,7 @@ public class MultivariateNormalDistributionModel implements TrackModel {
     private static final double HALF_AS_DOUBLE = 0.5;
 
     /**
-     * Method to parse the model
+     * Method to build the MultivariateNormalDistribution model for the given track data.
      *
      * @param data List of feature vectors for each window.
      * @return Multivariate Normal Distribution Model
@@ -32,6 +32,12 @@ public class MultivariateNormalDistributionModel implements TrackModel {
         return getMultivariateNormalDistribution(getMeanVectorOfMatrix(matrix), getCovarianceMatrix(matrix));
     }
 
+    /**
+     * Gets the similarity (the symmetric Kullback-Leibler Divergence) between two Multivariate Normal Distribution models.
+     * @param dx First track Multivariate Normal Distribution model.
+     * @param dy Second track Multivariate Normal Distribution model.
+     * @return double value for the similarity (the symmetric Kullback-Leibler Divergence) between the two track models.
+     */
     @Override
     public double getSimilarity(MultivariateNormalDistribution dx, MultivariateNormalDistribution dy) {
         return getSymmetricKullbackLeiblerDivergence(dx, dy);
