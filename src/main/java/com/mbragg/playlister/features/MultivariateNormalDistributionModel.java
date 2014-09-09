@@ -23,7 +23,7 @@ public class MultivariateNormalDistributionModel {
     /**
      * Method to parse the model
      *
-     * @param data List<double[]>. feature vectors for each window.
+     * @param data List of feature vectors for each window.
      * @return Multivariate Normal Distribution Model
      */
     public MultivariateNormalDistribution build(List<double[]> data) {
@@ -34,7 +34,7 @@ public class MultivariateNormalDistributionModel {
     /**
      * For a given list of double[]'s, construct a matrix.
      *
-     * @param data List<double[]>. feature vectors for each window.
+     * @param data List of feature vectors for each window.
      * @return RealMatrix. Matrix representation.
      */
     protected RealMatrix createRealMatrix(List<double[]> data) {
@@ -76,7 +76,7 @@ public class MultivariateNormalDistributionModel {
     }
 
     /**
-     * For a given covariance matrix & mean vector, return a new Multivariate Normal Distribution model.
+     * For a given covariance matrix and mean vector, return a new Multivariate Normal Distribution model.
      *
      * @param meanVector       RealVector. The mean vector for the data.
      * @param covarianceMatrix RealMatrix. The covariance matrix for the data.

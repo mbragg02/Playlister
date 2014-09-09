@@ -11,7 +11,7 @@ import org.springframework.data.neo4j.config.Neo4jConfiguration;
 import org.springframework.scheduling.annotation.EnableAsync;
 
 /**
- * Application configuration class (Spring framework & Neo4j)
+ * Application configuration class (Spring framework and Neo4j)
  *
  * @author Michael Bragg
  */

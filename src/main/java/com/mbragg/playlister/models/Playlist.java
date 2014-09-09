@@ -24,7 +24,7 @@ import java.util.stream.Collectors;
 
 /**
  * Playlist. Build method to construct a playlist (a list a Track objects).
- * Includes methods to launch & export the playlist.
+ * Includes methods to launch and export the playlist.
  *
  * @author Michael Bragg
  */
@@ -44,7 +44,7 @@ public class Playlist {
      * File paths are extracted then passed to a write method to batchAudioByteExtraction the playlist file.
      *
      * @param results List of tracks to form the playlist from.
-     * @return List<Track>. The list of Tracks are return.
+     * @return A list of Tracks
      */
     public List<Track> build(List<Track> results) {
 

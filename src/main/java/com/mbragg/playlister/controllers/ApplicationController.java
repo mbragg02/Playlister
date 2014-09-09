@@ -21,7 +21,7 @@ public interface ApplicationController {
      * @param fileName        String. Name of the file to act as the query
      * @param sizeOfResult    int. The number of files in the playlist
      * @param restrictByGenre Boolean. Whether or ont to restrict the the query to the same genre meta tag as the query track.
-     * @return List<Track> A List of tracks for the generated playlist.
+     * @return A List of tracks for the generated playlist.
      */
     List<Track> query(String fileName, int sizeOfResult, boolean restrictByGenre);
 
@@ -41,28 +41,28 @@ public interface ApplicationController {
 
     /**
      * Given a String to a local music directory, return a list of .m4a files that have not
-     * yet been processed & stored in the application's database.
+     * yet been processed and stored in the application's database.
      *
      * @param musicDirectoryFilePath String. Path to local music directory
      * @return List of files found in the directory (and sub directory's) that are also not yet
-     * processed & stored in the applications database.
+     * processed and stored in the applications database.
      */
     List<File> directoryBatchBuild(String musicDirectoryFilePath);
 
     /**
-     * Given a single file, returns a list containing the file if it has not yet been processed & stored on the applications database.
-     * [Allows for the case when a user tries to build a playlist from a file that has not yet been proceed & stored]
+     * Given a single file, returns a list containing the file if it has not yet been processed and stored on the applications database.
+     * [Allows for the case when a user tries to build a playlist from a file that has not yet been proceed and stored]
      *
      * @param file File. File to check against the database.
-     * @return List containing the file if is not yet been processed & stored in the applications database.
+     * @return List containing the file if is not yet been processed and stored in the applications database.
      */
     List<File> queryFileBatchBuild(File file);
 
     /**
-     * Given a list of files to process, execute a batch job to return a Map of the extracted audio bytes & audio formats.
+     * Given a list of files to process, execute a batch job to return a Map of the extracted audio bytes and audio formats.
      *
      * @param filesToProcessBuffer List of files to process i.e. file buffer
-     * @return A Map of the extracted audio bytes & audio formats.
+     * @return A Map of the extracted audio bytes and audio formats.
      * @throws InterruptedException if the batch job is interrupted at any time. i.e A user has chosen to cancel the job.
      */
     Map<Future<byte[]>, AudioFormat> extractAudioBatch(List<File> filesToProcessBuffer) throws InterruptedException;

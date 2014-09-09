@@ -20,6 +20,7 @@ public final class ExternalApplication {
      *
      * @param file The file to open.
      * @return boolean. True if successful, false otherwise.
+     * @throws IOException If and exception occurs opening the given file.
      */
     public static boolean launch(File file) throws IOException {
 

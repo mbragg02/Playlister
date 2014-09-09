@@ -138,7 +138,7 @@ public class GraphDAO implements DAO {
      * @param filename        String. The fileName of a track to query.
      * @param sizeOfResult    int.
      * @param restrictByGenre boolean. Whether to limit the scope of the search to within the same genreName as the query track.
-     * @return List<Track>. List of most similar tracks.
+     * @return List of most similar tracks.
      */
     @Override
     public List<Track> query(String filename, int sizeOfResult, boolean restrictByGenre) {

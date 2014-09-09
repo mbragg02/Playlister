@@ -47,9 +47,8 @@ public class FeatureExtractionController {
      * @param audioBytes  byte[]. The byte array for an audio file.
      * @param audioFormat AudioFormat. The audio format information for a audio file
      * @return a MultivariateNormalDistribution model that represents an audio file.
-     * @throws Exception
      */
-    public MultivariateNormalDistribution extract(byte[] audioBytes, AudioFormat audioFormat) throws Exception {
+    public MultivariateNormalDistribution extract(byte[] audioBytes, AudioFormat audioFormat) {
 
         double[] samples = getSamples(audioBytes, audioFormat);
 
@@ -75,7 +74,7 @@ public class FeatureExtractionController {
      * Main method to parse the audio features.
      *
      * @param samples           double[] samples of a audio file.
-     * @param featuresToExtract List<Feature>. List of features to parse.
+     * @param featuresToExtract List of features to parse.
      * @return double[][][]. Arrays containing all the feature values for each window of audio.
      * Array format is: [window][feature][values]
      */
@@ -166,7 +165,7 @@ public class FeatureExtractionController {
     /**
      * Translates the [window][feature][value] results array to a list of double[] vectors.
      * Each single double[] vector represents a combination of the different feature values for each window.
-     * For example: [MFCCs & RMS & Zero crossing rate]
+     * For example: [MFCCs and RMS and Zero crossing rate]
      *
      * @param featureResults Full results array. [window][feature][value]
      * @return List of complete feature vector for each window.

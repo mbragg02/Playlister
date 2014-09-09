@@ -47,8 +47,8 @@ public class AudioBatchController {
     /**
      * For a given list of files, determines which have already been processed by the application.
      *
-     * @param files List<File>. Complete list of files from a users music directory.
-     * @return List<File>. List of files that have not yet been processed by the application.
+     * @param files Complete list of files from a users music directory.
+     * @return List of files that have not yet been processed by the application.
      */
     public List<File> getFilesToProcess(List<File> files) {
 
@@ -69,7 +69,7 @@ public class AudioBatchController {
     /**
      * Method to coordinate the extraction of byte[] arrays from files in a batch list.
      *
-     * @param filesToProcessBuffer List<File>. Files in a current batch that are to be processed asynchronously.
+     * @param filesToProcessBuffer Files in a current batch that are to be processed asynchronously.
      * @return A Map of byte[] data (key) with AudioFormat data (value)
      * @throws InterruptedException If the batch job is cancelled at any point.
      */
