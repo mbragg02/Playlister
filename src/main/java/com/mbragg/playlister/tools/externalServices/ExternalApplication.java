@@ -12,7 +12,7 @@ import java.io.IOException;
 public final class ExternalApplication {
 
     private ExternalApplication() {
-        // hidden
+        // Hide constructor
     }
 
     /**
