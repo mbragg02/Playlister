@@ -46,4 +46,14 @@ public class SimilarTo {
     public double getSimilarity() {
         return similarity;
     }
+
+    @Override
+    public String toString() {
+        return "SimilarTo{" +
+                "id=" + id +
+                ", fromTrack=" + fromTrack +
+                ", toTrack=" + toTrack +
+                ", similarity=" + similarity +
+                '}';
+    }
 }
