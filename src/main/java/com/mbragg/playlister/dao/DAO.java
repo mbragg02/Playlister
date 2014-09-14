@@ -55,4 +55,9 @@ public interface DAO {
      * Delete the data in the database.
      */
     void deleteDatabase();
+
+    /**
+     * Shut down the database cleanly
+     */
+    public void shutdown();
 }
