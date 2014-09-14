@@ -3,6 +3,7 @@ package com.mbragg.playlister.controllers.audioControllers;
 import com.mbragg.playlister.controllers.extractionControllers.FeatureExtractionController;
 import com.mbragg.playlister.controllers.extractionControllers.MetaExtractionController;
 import com.mbragg.playlister.dao.DAO;
+import com.mbragg.playlister.models.BatchTrack;
 import com.mbragg.playlister.models.entitys.Track;
 import com.mbragg.playlister.factories.TrackFactory;
 import com.mbragg.playlister.controllers.extractionControllers.GenreExtractionController;
@@ -24,6 +25,7 @@ import java.io.File;
 import java.io.IOException;
 import java.util.List;
 import java.util.Map;
+import java.util.concurrent.ExecutionException;
 
 /**
  * Class for coordinating the construction and saving of full Track objects.
@@ -53,19 +55,21 @@ public class AudioTrackController {
     }
 
     /**
-     * Build method. From the supplied audio file parameters, a model and track object are parse, and saved with the DAO.
+     * Build method. A new complete Track is built. With parameters from the supplied BatchTrack, Metadata and an feature model.
      *
-     * @param file        File. The audio file.
-     * @param audioBytes  byte[]. Array of bytes representing the audio.
-     * @param audioFormat AudioFormat. The extracted and formatted audio file format information.
-     * @return a Track object.
+     * @param batchTrack Contains the extracted audio parameters needed to build a new Track
+     * @return A new complete Track
      */
-    public Track build(File file, byte[] audioBytes, AudioFormat audioFormat) {
+    public Track build(BatchTrack batchTrack) {
 
         Track track = TrackFactory.getInstance().getTrack();
 
-        track = addMetaDataToTrack(file, track);
-        track = addDistributionModelToTrack(track, audioBytes, audioFormat);
+        track = addMetaDataToTrack(batchTrack.getFile(), track);
+        try {
+            track = addDistributionModelToTrack(track, batchTrack.getAudio().get(), batchTrack.getAudioFormat());
+        } catch (InterruptedException | ExecutionException e) {
+            logger.log(Level.WARN, e.getMessage());
+        }
 
         dao.saveTrack(track);
 

@@ -1,13 +1,16 @@
 package com.mbragg.playlister.dao;
 
-import com.mbragg.playlister.models.TrackModel;
+import com.mbragg.playlister.models.MultivariateNormalDistributionModel;
 import com.mbragg.playlister.models.entitys.Genre;
 import com.mbragg.playlister.models.entitys.Track;
+import com.mbragg.playlister.relationships.SimilarTo;
 import com.mbragg.playlister.repositories.GenreRepository;
 import com.mbragg.playlister.repositories.TrackRepository;
 import org.apache.commons.math3.distribution.MultivariateNormalDistribution;
 import org.apache.commons.math3.linear.Array2DRowRealMatrix;
 import org.apache.commons.math3.linear.RealMatrix;
+import org.apache.log4j.Level;
+import org.apache.log4j.Logger;
 import org.neo4j.graphdb.Transaction;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
@@ -28,7 +31,9 @@ import java.util.List;
 public class GraphDAO implements DAO {
 
     @Autowired
-    private TrackModel trackModel;
+    private Logger logger;
+
+    private MultivariateNormalDistributionModel trackModel;
 
     @Value("${dbName}")
     private String dbName;
@@ -38,10 +43,11 @@ public class GraphDAO implements DAO {
     private GenreRepository genreRepository;
 
     @Autowired
-    public GraphDAO(GraphDatabase graphDatabase, GenreRepository genreRepository, TrackRepository trackRepository) {
+    public GraphDAO(GraphDatabase graphDatabase, GenreRepository genreRepository, TrackRepository trackRepository, MultivariateNormalDistributionModel model) {
         this.graphDatabase = graphDatabase;
         this.genreRepository = genreRepository;
         this.trackRepository = trackRepository;
+        this.trackModel = model;
     }
 
     /**
@@ -101,12 +107,13 @@ public class GraphDAO implements DAO {
                     break;
                 }
             }
-
             // Add similarity relationships to all other track nodes
             for (Track nextTrack : trackRepository.findAll()) {
+
                 if (!nextTrack.equals(track)) {
-                    double similarity = this.trackModel.getSimilarity(createDistributionFromProperties(track), createDistributionFromProperties(nextTrack));
-                    track.relateTo(nextTrack, similarity);
+                    double similarity = trackModel.getSimilarity(createDistributionFromProperties(track), createDistributionFromProperties(nextTrack));
+                    SimilarTo relationship = track.relateTo(nextTrack, similarity);
+                    logger.log(Level.INFO, "relationships: " + relationship);
                 }
             }
 
@@ -171,6 +178,11 @@ public class GraphDAO implements DAO {
     public void deleteDatabase() {
         trackRepository.deleteAll();
         genreRepository.deleteAll();
+    }
+
+    @Override
+    public void shutdown() {
+        graphDatabase.shutdown();
     }
 
 }

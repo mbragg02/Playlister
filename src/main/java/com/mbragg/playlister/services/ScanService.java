@@ -1,6 +1,7 @@
 package com.mbragg.playlister.services;
 
 import com.mbragg.playlister.controllers.ApplicationController;
+import com.mbragg.playlister.models.BatchTrack;
 import com.mbragg.playlister.models.entitys.Track;
 import javafx.concurrent.Service;
 import javafx.concurrent.Task;
@@ -9,10 +10,8 @@ import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
-import javax.sound.sampled.AudioFormat;
 import java.io.File;
 import java.util.List;
-import java.util.Map;
 import java.util.concurrent.ExecutionException;
 import java.util.concurrent.Future;
 
@@ -37,7 +36,7 @@ public class ScanService extends Service {
     private int numberOfConcurrentThreads;
 
     public ScanService() {
-        // empty constructor
+        // empty public constructor for Spring framework
     }
 
     public void setNumberOfConcurrentThreads(int numberOfConcurrentThreads) {
@@ -106,13 +105,13 @@ public class ScanService extends Service {
                     filesToProcessBuffer = listOfFiles.subList(filesToProcessStartIndex, filesToProcessEndIndex);
 
                     updateMessage("Extracting audio... ");
-                    Map<Future<byte[]>, AudioFormat> audioBytesWithAudioFormats;
+                    List<BatchTrack> audioBytesWithAudioFormats;
 
                     try {
                         audioBytesWithAudioFormats = applicationController.extractAudioBatch(filesToProcessBuffer);
                         updateMessage("Extracting audio complete");
 
-                        createTracksInBatch(audioBytesWithAudioFormats, filesToProcessBuffer);
+                        createTracksInBatch(audioBytesWithAudioFormats);
                     } catch (InterruptedException e) {
                         if (isCancelled()) break;
                     }
@@ -129,28 +128,25 @@ public class ScanService extends Service {
             }
 
             /**
-             * Method to create a batch of Tracks.
-             * @param audioBytesWithAudioFormats Map of Future<byte[]> audio data (Key) and AudioFormat data (Value)
-             * @param filesToProcessBuffer List<File> a list of files to process in this batch job
-             * @throws ExecutionException If the Future<byte> is not complete when it is queried.
-             * @throws InterruptedException If the batch job is cancelled at any time.
+             * Method to create Tracks from a list of BatchTracks
+             * @param batchTracks List of BatchTracks
              */
-            public void createTracksInBatch(Map<Future<byte[]>, AudioFormat> audioBytesWithAudioFormats, List<File> filesToProcessBuffer)
+            public void createTracksInBatch(List<BatchTrack> batchTracks)
                     throws ExecutionException, InterruptedException {
 
                 int numberOfFilesToProcess = listOfFiles.size();
 
-                int fileBufferIterator = 0;
-
-                for (Map.Entry<Future<byte[]>, AudioFormat> entry : audioBytesWithAudioFormats.entrySet()) {
-                    File file = filesToProcessBuffer.get(fileBufferIterator++);
+                for (BatchTrack batchTrack : batchTracks) {
 
                     int progress = ++fileCounter;
-                    logger.log(Level.INFO, "[" + progress + " of " + numberOfFilesToProcess + "] " + file.getName());
-                    updateMessage("[" + progress + " of " + numberOfFilesToProcess + "] " + file.getName());
+                    String buildStatus = "[" + progress + " of " + numberOfFilesToProcess + "] " + batchTrack.getFile().getName();
+
+                    logger.log(Level.INFO, buildStatus);
+                    updateMessage(buildStatus);
                     updateProgress(progress, numberOfFilesToProcess);
 
-                    Future<Track> track = applicationController.buildTrack(file, entry.getKey().get(), entry.getValue());
+                    Future<Track> track = applicationController.buildTrack(batchTrack);
+
                     while (!track.isDone()) {
                         Thread.sleep(THREAD_SLEEP_MS);
                     }

@@ -1,12 +1,11 @@
 package com.mbragg.playlister.controllers;
 
+import com.mbragg.playlister.models.BatchTrack;
 import com.mbragg.playlister.models.entitys.Track;
 import org.springframework.scheduling.annotation.Async;
 
-import javax.sound.sampled.AudioFormat;
 import java.io.File;
 import java.util.List;
-import java.util.Map;
 import java.util.concurrent.Future;
 
 /**
@@ -65,19 +64,16 @@ public interface ApplicationController {
      * @return A Map of the extracted audio bytes and audio formats.
      * @throws InterruptedException if the batch job is interrupted at any time. i.e A user has chosen to cancel the job.
      */
-    Map<Future<byte[]>, AudioFormat> extractAudioBatch(List<File> filesToProcessBuffer) throws InterruptedException;
+    List<BatchTrack> extractAudioBatch(List<File> filesToProcessBuffer) throws InterruptedException;
+
 
     /**
-     * Build a Track
-     *
-     * @param file   File. The particular audio file
-     * @param bytes  byte[]. Array containing the bytes extracted form the file.
-     * @param format AudioFormat. The audio format of the data.
-     * @return A new Track. Note: Wrapped in Future container to handle cases where the user has chosen to
-     * cancel the build process whilst a new track is being processed.
+     * Build a Track from a BatchTrack
+     * @param batchTrack A BatchTrack i.e. Wraps parameters needed to build a Track object.
+     * @return A new Track
      */
     @Async
-    Future<Track> buildTrack(File file, byte[] bytes, AudioFormat format);
+    Future<Track> buildTrack(BatchTrack batchTrack);
 
     /**
      * Call to delete all the data in the database
@@ -90,4 +86,9 @@ public interface ApplicationController {
      * @param file File. The new for the generated playlist
      */
     void exportPlaylist(File file);
+
+    /**
+     * Shutdown the database cleanly
+     */
+    void dbShutdown();
 }

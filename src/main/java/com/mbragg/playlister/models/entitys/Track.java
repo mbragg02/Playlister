@@ -1,6 +1,8 @@
 package com.mbragg.playlister.models.entitys;
 
 import com.mbragg.playlister.relationships.SimilarTo;
+import org.apache.commons.math3.linear.Array2DRowRealMatrix;
+import org.apache.commons.math3.linear.RealMatrix;
 import org.neo4j.graphdb.Direction;
 import org.springframework.data.neo4j.annotation.*;
 import org.springframework.data.neo4j.fieldaccess.DynamicProperties;
@@ -143,7 +145,19 @@ public class Track {
 
     @Override
     public String toString() {
-        return "Track{" + "filename='" + filename + '\'' + '}';
+        double[] means = (double[]) modelProps.getProperty("means");
+
+        RealMatrix covarianceMatrix = new Array2DRowRealMatrix(means.length, means.length);
+
+        for (int i = 0; i < means.length; i++) {
+            covarianceMatrix.setRow(i, (double[]) modelProps.getProperty("co_row" + i));
+        }
+
+        return "Track{" +
+                "filename='" + filename +
+//                "mean= " + Arrays.toString(means) + "\n" +
+//                "covariance= " + covarianceMatrix + "\n" +
+                '}';
     }
 
     @Override

@@ -309,6 +309,7 @@ public class ViewController {
      * Called when the application is instructed to exit.
      */
     public void exitApplication() {
+        applicationController.dbShutdown();
         stage.close();
     }
 

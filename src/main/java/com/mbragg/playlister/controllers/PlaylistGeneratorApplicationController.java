@@ -3,20 +3,19 @@ package com.mbragg.playlister.controllers;
 import com.mbragg.playlister.controllers.audioControllers.AudioBatchController;
 import com.mbragg.playlister.controllers.audioControllers.AudioTrackController;
 import com.mbragg.playlister.dao.DAO;
+import com.mbragg.playlister.models.BatchTrack;
+import com.mbragg.playlister.models.Playlist;
 import com.mbragg.playlister.models.entitys.Track;
 import com.mbragg.playlister.tools.file.DirectoryParser;
-import com.mbragg.playlister.models.Playlist;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.scheduling.annotation.Async;
 import org.springframework.scheduling.annotation.AsyncResult;
 import org.springframework.stereotype.Component;
 
-import javax.sound.sampled.AudioFormat;
 import java.io.File;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Map;
 import java.util.concurrent.Future;
 
 /**
@@ -77,14 +76,14 @@ public class PlaylistGeneratorApplicationController implements ApplicationContro
     }
 
     @Override
-    public Map<Future<byte[]>, AudioFormat> extractAudioBatch(List<File> filesToProcessBuffer) throws InterruptedException {
+    public List<BatchTrack> extractAudioBatch(List<File> filesToProcessBuffer) throws InterruptedException {
         return audioBatchController.batchAudioByteExtraction(filesToProcessBuffer);
     }
 
     @Override
     @Async
-    public Future<Track> buildTrack(File file, byte[] bytes, AudioFormat format) {
-        return new AsyncResult<>(audioTrackController.build(file, bytes, format));
+    public Future<Track> buildTrack(BatchTrack batchTrack) {
+        return new AsyncResult<>(audioTrackController.build(batchTrack));
     }
 
     @Override
@@ -96,6 +95,11 @@ public class PlaylistGeneratorApplicationController implements ApplicationContro
     @Override
     public void exportPlaylist(File file) {
         playlist.export(file);
+    }
+
+    @Override
+    public void dbShutdown() {
+        dao.shutdown();
     }
 
 }
