@@ -14,10 +14,8 @@ import java.io.File;
 import java.io.FileOutputStream;
 import java.io.FileWriter;
 import java.io.IOException;
-import java.net.URI;
 import java.net.URISyntaxException;
 import java.net.URL;
-import java.nio.file.Path;
 import java.util.Arrays;
 import java.util.List;
 import java.util.stream.Collectors;
@@ -91,7 +89,6 @@ public class Playlist {
         }
     }
 
-
     /**
      * Gets the file path of the current executing code - i.e. the directory of a .jar package
      * Used for determining where to write the new playlist file:
@@ -124,7 +121,6 @@ public class Playlist {
         return new File(path);
     }
 
-
     /**
      * Launch an external media player to player the playlist file.
      */
@@ -137,7 +133,6 @@ public class Playlist {
             logger.log(Level.WARN, "External media player not available.");
         }
     }
-
 
     /**
      * Ability to write a playlist to a supplied file.
@@ -169,5 +164,3 @@ public class Playlist {
 
     }
 }
-
-

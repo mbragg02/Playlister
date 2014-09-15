@@ -1,6 +1,6 @@
 package com.mbragg.playlister.dao;
 
-import com.mbragg.playlister.models.MultivariateNormalDistributionModel;
+import com.mbragg.playlister.models.TrackModel;
 import com.mbragg.playlister.models.entitys.Genre;
 import com.mbragg.playlister.models.entitys.Track;
 import com.mbragg.playlister.relationships.SimilarTo;
@@ -33,7 +33,7 @@ public class GraphDAO implements DAO {
     @Autowired
     private Logger logger;
 
-    private MultivariateNormalDistributionModel trackModel;
+    private TrackModel trackModel;
 
     @Value("${dbName}")
     private String dbName;
@@ -43,7 +43,7 @@ public class GraphDAO implements DAO {
     private GenreRepository genreRepository;
 
     @Autowired
-    public GraphDAO(GraphDatabase graphDatabase, GenreRepository genreRepository, TrackRepository trackRepository, MultivariateNormalDistributionModel model) {
+    public GraphDAO(GraphDatabase graphDatabase, GenreRepository genreRepository, TrackRepository trackRepository, TrackModel model) {
         this.graphDatabase = graphDatabase;
         this.genreRepository = genreRepository;
         this.trackRepository = trackRepository;

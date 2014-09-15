@@ -69,6 +69,7 @@ public interface ApplicationController {
 
     /**
      * Build a Track from a BatchTrack
+     *
      * @param batchTrack A BatchTrack i.e. Wraps parameters needed to build a Track object.
      * @return A new Track
      */

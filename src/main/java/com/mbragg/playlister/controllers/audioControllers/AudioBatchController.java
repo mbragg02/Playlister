@@ -86,7 +86,7 @@ public class AudioBatchController {
                 batchTracks.add(batchTrack);
             }
 
-            for (BatchTrack batchTrack: batchTracks) {
+            for (BatchTrack batchTrack : batchTracks) {
                 while (!batchTrack.getAudio().isDone()) Thread.sleep(10);
             }
 

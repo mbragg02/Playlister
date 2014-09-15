@@ -13,5 +13,3 @@ public interface GenreRepository extends GraphRepository<Genre> {
     Genre findByName(String name);
 
 }
-
-

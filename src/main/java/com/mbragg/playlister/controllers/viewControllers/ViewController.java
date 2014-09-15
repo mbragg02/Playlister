@@ -242,6 +242,7 @@ public class ViewController {
                 }
 
             });
+
         } else {
             scanQueryTrack();
         }

@@ -116,11 +116,11 @@ public class Samples {
                     samples[chan][sample] = (double) shortBuffer.get() / maximumSampleValue;
                 }
             }
+
         } else {
             throw new IllegalArgumentException("Bit depth must be either 8 bit or 16 bit");
         }
         return samples;
-
     }
 
     /**
